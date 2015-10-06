@@ -1,7 +1,8 @@
-angular.module('taskboardApp')
+'use strict';
+angular.module('trellocloneApp')
     .factory('workItemFactory', ['$http', function ($http) {
 
-        var urlBase = '/workitems';
+        var urlBase = '/taskboard-web/workitems';
         var workItemFactory = {};
 
         workItemFactory.getAllWorkItems = function () {

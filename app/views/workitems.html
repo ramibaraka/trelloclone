@@ -1,0 +1,11 @@
+<div>
+	<p>
+		<ul ng-repeat="workItem in workItems" style="padding:5px 10px; cursor: move;">
+			<li ng-model="workItem">
+				{{ workItem }}
+			<button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
+			</li>
+		</ul>
+		Error: {{ status }}
+	</p>
+</div>
