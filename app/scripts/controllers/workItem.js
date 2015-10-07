@@ -15,7 +15,7 @@ angular.module('trellocloneApp')
                         $scope.workItems = workItems;
                     })
                     .error(function (error) {
-                        $scope.workItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.workItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci ', 'Fel3'];
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }

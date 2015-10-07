@@ -1,11 +1,41 @@
-<div>
-	<p>
-		<ul ng-repeat="workItem in workItems" style="padding:5px 10px; cursor: move;">
-			<li ng-model="workItem">
+
+
+<div class="w-container cf">
+<h2 class="w-table-name">Tablename</h2>
+
+	<div class="w-section">
+		<h2 class="w-status">NOT STARTED</h2>
+
+		<ul ng-repeat="workItem in workItems" class="list-group">
+			<li ng-model="workItem" class="list-group-item">
+				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				{{ workItem }}
-			<button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
 			</li>
 		</ul>
-		Status: {{ status }}
-	</p>
-</div>
+	</div>
+
+	<div class="w-section">
+		<h2 class="w-status">IN PROGRESS</h2>
+
+		<ul ng-repeat="workItem in workItems" class="list-group">
+			<li  ng-model="workItem" class="list-group-item">
+			<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				{{ workItem }}
+			</li>
+		</ul>
+	</div>
+
+	<div class="w-section">
+		<h2 class="w-status">COMPLETED</h2>
+
+		<ul ng-repeat="workItem in workItems" class="list-group">
+			<li ng-model="workItem" class="list-group-item">
+				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				{{ workItem }}
+			</li>
+		</ul>
+	</div>
+
+</div> 
+
+<p>Status: {{ status }}</p>
