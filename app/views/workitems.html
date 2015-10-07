@@ -3,7 +3,7 @@
 		<ul ng-repeat="workItem in workItems" style="padding:5px 10px; cursor: move;">
 			<li ng-model="workItem">
 				{{ workItem }}
-			<button class="btn btn-danger" ng-click="removeTodo($index)" aria-label="Remove">X</button>
+			<button class="btn btn-danger" ng-click="deleteWorkItem( $index + 1 )" aria-label="Remove">X</button>
 			</li>
 		</ul>
 		Status: {{ status }}
