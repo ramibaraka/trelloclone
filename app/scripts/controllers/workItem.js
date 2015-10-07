@@ -7,15 +7,40 @@ angular.module('trellocloneApp')
             $scope.workItems;
             $scope.issues;
 
-            getWorkItems();
+            $scope.workItemsInProgress = getInProgress();
+            $scope.notStartedWorkItems = getNotStartedWorkItems();
+            $scope.completedWorkItems = getCompletedWorkItems();
 
-            function getWorkItems() {
-                workItemFactory.getAllWorkItems()
-                    .success(function (workItems) {
-                        $scope.workItems = workItems;
+
+            function getInProgress() {
+                workItemFactory.getWorkItemsInProgress()
+                    .success(function (workItemsInProgress) {
+                        $scope.workItemsInProgress = workItemsInProgress;
                     })
                     .error(function (error) {
-                        $scope.workItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3'];
+                        $scope.status = 'Unable to load workItem data: ' + error.message;
+                    });
+            }
+
+            function getNotStartedWorkItems() {
+                workItemFactory.getNotStartedWorkItems()
+                    .success(function (notStartedWorkItems) {
+                        $scope.notStartedWorkItems = notStartedWorkItems;
+                    })
+                    .error(function (error) {
+                        $scope.notStartedWorkItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.status = 'Unable to load workItem data: ' + error.message;
+                    });
+            }
+
+            function getCompletedWorkItems() {
+                workItemFactory.getCompletedWorkItems()
+                    .success(function (completedWorkItems) {
+                        $scope.completedWorkItems = completedWorkItems;
+                    })
+                    .error(function (error) {
+                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci ', 'Fel3'];
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }
