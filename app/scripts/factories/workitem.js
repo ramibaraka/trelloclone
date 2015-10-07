@@ -2,7 +2,7 @@
 angular.module('trellocloneApp')
     .factory('workItemFactory', ['$http', function ($http) {
 
-        var urlBase = '/taskboard-web/workitems';
+        var urlBase = 'http://localhost:8080/taskboard-web/workitems';
         var workItemFactory = {};
 
         workItemFactory.getAllWorkItems = function () {
@@ -30,19 +30,19 @@ angular.module('trellocloneApp')
         };
 
         workItemFactory.setCompleted = function (id) {
-            return $http.put(urlBase + '/' + id + '/completed')
+            return $http.put(urlBase + '/' + id + '/completed');
         };
 
         workItemFactory.setInProgress = function (id) {
-            return $http.put(urlBase + '/' + id + '/inprogress')
+            return $http.put(urlBase + '/' + id + '/inprogress');
         };
 
         workItemFactory.setNotStarted = function (id) {
-            return $http.put(urlBase + '/' + id + '/notstarted')
+            return $http.put(urlBase + '/' + id + '/notstarted');
         };
 
         workItemFactory.updateIssue = function (id, issue) {
-            return $http.put(urlBase + '/' + id + '/issue', issue)
+            return $http.put(urlBase + '/' + id + '/issue', issue);
         };
 
         workItemFactory.deleteWorkItem = function (id) {
