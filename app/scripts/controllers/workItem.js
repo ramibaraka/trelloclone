@@ -7,12 +7,37 @@ angular.module('trellocloneApp')
             $scope.customers;
             $scope.orders;
 
-            getWorkItems();
+            getInProgress();
+            getNotStartedWorkItems();
+            getCompletedWorkItems();
 
-            function getWorkItems() {
-                workItemFactory.getAllWorkItems()
-                    .success(function (workItems) {
-                        $scope.workItems = workItems;
+
+            function getInProgress() {
+                workItemFactory.getWorkItemsInProgress()
+                    .success(function (workItemsInProgress) {
+                        $scope.workItemsInProgress = workItemsInProgress;
+                    })
+                    .error(function (error) {
+                        $scope.workItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.status = 'Unable to load workItem data: ' + error.message;
+                    });
+            }
+
+            function getNotStartedWorkItems() {
+                workItemFactory.getNotStartedWorkItems()
+                    .success(function (notStartedWorkItems) {
+                        $scope.notStartedWorkItems = notStartedWorkItems;
+                    })
+                    .error(function (error) {
+                        $scope.workItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.status = 'Unable to load workItem data: ' + error.message;
+                    });
+            }
+
+            function getCompletedWorkItems() {
+                workItemFactory.getCompletedWorkItems()
+                    .success(function (completedWorkItems) {
+                        $scope.completedWorkItems = completedWorkItems;
                     })
                     .error(function (error) {
                         $scope.workItems = ['fel1', 'fel2', 'fel3'];
