@@ -1,5 +1,8 @@
 <div class="w-container cf">
-<h2 class="w-table-name">Tablename</h2>
+	<div class="w-header">
+		<h2 class="w-table-name">Tablename</h2>
+		<button type="button" class="btn btn-success">Add workitem</button>
+	</div>
 
 	<div class="w-section">
 		<h2 class="w-status">NOT STARTED</h2>
@@ -17,7 +20,7 @@
 
 		<ul ng-repeat="workItem in workItemsInProgress" class="list-group">
 			<li  ng-model="workItem" class="list-group-item">
-			<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				{{ workItem }}
 			</li>
 		</ul>
