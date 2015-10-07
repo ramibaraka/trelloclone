@@ -7,9 +7,9 @@ angular.module('trellocloneApp')
             $scope.workItems;
             $scope.issues;
 
-            getInProgress();
-            getNotStartedWorkItems();
-            getCompletedWorkItems();
+            $scope.workItemsInProgress = getInProgress();
+            $scope.notStartedWorkItems = getNotStartedWorkItems();
+            $scope.completedWorkItems = getCompletedWorkItems();
 
 
             function getInProgress() {
@@ -18,7 +18,7 @@ angular.module('trellocloneApp')
                         $scope.workItemsInProgress = workItemsInProgress;
                     })
                     .error(function (error) {
-                        $scope.workItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -29,7 +29,7 @@ angular.module('trellocloneApp')
                         $scope.notStartedWorkItems = notStartedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.workItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.notStartedWorkItems = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -40,7 +40,7 @@ angular.module('trellocloneApp')
                         $scope.completedWorkItems = completedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.workItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci ', 'Fel3'];
+                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci ', 'Fel3'];
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }

@@ -4,7 +4,7 @@
 	<div class="w-section">
 		<h2 class="w-status">NOT STARTED</h2>
 
-		<ul ng-repeat="workItem in workItems" class="list-group">
+		<ul ng-repeat="workItem in notStartedWorkItems" class="list-group">
 			<li ng-model="workItem" class="list-group-item">
 				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				{{ workItem }}
@@ -15,7 +15,7 @@
 	<div class="w-section">
 		<h2 class="w-status">IN PROGRESS</h2>
 
-		<ul ng-repeat="workItem in workItems" class="list-group">
+		<ul ng-repeat="workItem in workItemsInProgress" class="list-group">
 			<li  ng-model="workItem" class="list-group-item">
 			<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				{{ workItem }}
@@ -26,7 +26,7 @@
 	<div class="w-section">
 		<h2 class="w-status">COMPLETED</h2>
 
-		<ul ng-repeat="workItem in workItems" class="list-group">
+		<ul ng-repeat="workItem in completedWorkItems" class="list-group">
 			<li ng-model="workItem" class="list-group-item">
 				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				{{ workItem }}
