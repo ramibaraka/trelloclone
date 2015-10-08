@@ -10,7 +10,8 @@
  */
 angular
   .module('trellocloneApp', [
-    'ngRoute'
+    'ngRoute',
+    'ui.sortable',
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -1,43 +1,107 @@
-<div class="w-container cf">
+<div class="container">
+
 	<div class="w-header">
-		<h2 class="w-table-name">Tablename</h2>
-		<button type="button" class="btn btn-success">Add workitem</button>
+		<h1>Taskboard</h1>
+		<div class="input-group-btn text-right">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-group"></i>
+				Members 
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu pull-right">
+				<li ng-repeat="contributor in contributors"><a href="#/">{{contributor}}</a></li>
+			</ul>
+		</div>
 	</div>
 
-	<div class="w-section">
-		<h2 class="w-status">NOT STARTED</h2>
-
-		<ul ng-repeat="workItem in notStartedWorkItems" class="list-group">
-			<li ng-model="workItem" class="list-group-item">
-				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				{{ workItem }}
-			</li>
-		</ul>
+	<div class="w-form">
+		<form ng-submit="addWorkItem()" class="form">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="workItem" placeholder="Write a workItem">
+				<span class="input-group-btn">
+					<input type="submit" class="btn btn-primary" value="add">
+				</span>
+			</div>
+		</form>
 	</div>
 
-	<div class="w-section">
-		<h2 class="w-status">IN PROGRESS</h2>
+	<div class="w-content row">
 
-		<ul ng-repeat="workItem in workItemsInProgress" class="list-group">
-			<li  ng-model="workItem" class="list-group-item">
-				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				{{ workItem }}
-			</li>
-		</ul>
+		<div class="w-section col-md-4">
+			<h3 class="text-center">NOT STARTED <i class="fa fa-bars"></i> </h3>
+			<div ui-sortable="sortableOptionsList[0]" class="apps-container screen" ng-model="workItems[0]">
+				<!-- Gammal div utan info osv...</!-->
+				<!-- <div class="bg-danger app" ng-repeat="app in workItems[0]">{{app.title}}</div> -->
+
+				<div class="panel panel-danger" ng-repeat="workitem in workItems[0]" style="margin-bottom:10px">
+					<div class="panel-heading">
+						{{workitem.title}}
+						<span class="badge pull-right">
+							<i class="fa fa-exclamation"></i>
+						</span>
+					</div>
+					<li class="list-group-item" data-toggle="collapse" data-target="#collapseExample{{$index}}" aria-expanded="false" aria-controls="collapseExample{{$index}}">
+
+
+						<i class="fa pull-right fa-chevron-down"></i>
+
+						<p>Default description of task...</p>
+
+						<div class="collapse" id="collapseExample{{$index}}">
+							{{workitem.description}}
+							<button type="button" class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#myModal{{$index}}">
+								<i class="fa fa-edit"></i>
+							</button>
+
+						</div>
+					</li>
+					<!-- Modal -->
+					<div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel">{{workitem.title}}</h4>
+								</div>
+								<div class="modal-body">
+									<form>
+										<div class="form-group">
+											<label for="title">Title</label>
+											<input type="email" class="form-control" id="title" value="{{workitem.title}}">
+										</div>
+										<div class="form-group">
+											<label for="description">Description</label>
+											<textarea class="form-control" id="description">{{workitem.description}}</textarea>
+										</div>
+										<div class="form-group">
+											<label for="description">Contributors</label>
+											<div class="well well-sm" ng-repeat="contributor in contributors">{{contributor}}</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-pencil"></i> Save changes</button>
+											<button type="button" class="btn btn-danger pull-right" data-dismiss="modal"><i class="fa fa-times"></i> Delete workitem</button>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="w-section col-md-4">
+			<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
+			<div ui-sortable="sortableOptionsList[1]" class="apps-container screen" ng-model="workItems[1]">
+				<div class="bg-info app" ng-repeat="app in workItems[1]">{{app.title}}</div>
+			</div>
+		</div>
+
+		<div class="w-section col-md-4">
+			<h3 class="text-center">COMPLETED <i class="fa fa-check"></i></h3>
+			<div ui-sortable="sortableOptionsList[2]" class="apps-container screen" ng-model="workItems[2]">
+				<div class="bg-success app" ng-repeat="app in workItems[2]">{{app.title}}</div>
+			</div>
+		</div>
 	</div>
-
-	<div class="w-section">
-		<h2 class="w-status">COMPLETED</h2>
-
-		<ul ng-repeat="workItem in completedWorkItems" class="list-group">
-			<li ng-model="workItem" class="list-group-item">
-				<button type="button" class="close" ng-click="removeTodo($index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				{{ workItem }}
-			</li>
-		</ul>
-	</div>
-
-</div> 
-
-<p>Status: {{ status }}</p>
-
