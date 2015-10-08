@@ -34,7 +34,7 @@
 				<!-- <div class="bg-danger app" ng-repeat="app in workItems[0]">{{app.title}}</div> -->
 
 				<div class="panel panel-danger" ng-repeat="workitem in workItems[0]" style="margin-bottom:10px">
-					<div class="panel-heading">
+					<div class="panel-heading" id = {{workitem.id}}>
 						{{workitem.title}}
 						<span class="badge pull-right">
 							<i class="fa fa-exclamation"></i>
@@ -67,7 +67,7 @@
 									<form>
 										<div class="form-group">
 											<label for="title">Title</label>
-											<input type="email" class="form-control" id="title" value="{{workitem.title}}">
+											<input type="text" class="form-control" id="title" value="{{workitem.title}}">
 										</div>
 										<div class="form-group">
 											<label for="description">Description</label>
@@ -93,7 +93,6 @@
 										</div>
 									</form>
 								</div>
-
 							</div>
 						</div>
 					</div>

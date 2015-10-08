@@ -6,18 +6,19 @@ angular.module('trellocloneApp')
             $scope.status;
             $scope.issues;
 
-            $scope.workItemsInProgress = getInProgress();
-            $scope.notStartedWorkItems = getNotStartedWorkItems();
-            $scope.completedWorkItems = getCompletedWorkItems();
+            refresh();
 
+            function refresh() {
+                $scope.workItemsInProgress = getInProgress();
+                $scope.notStartedWorkItems = getNotStartedWorkItems();
+                $scope.completedWorkItems = getCompletedWorkItems();
+
+            }
 
             function getInProgress() {
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
-                        $scope.workItemsInProgress = workItemsInProgress;
-                        console.log(workItemsInProgress[0]);
-                        console.log(workItemsInProgress[0].description);
-
+                        $scope.workItems[0] = workItemsInProgress;
                     })
                     .error(function (error) {
                         $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci'];
@@ -67,43 +68,55 @@ angular.module('trellocloneApp')
 
             $scope.contributors = ['Osama', 'Sandra', 'Rami', 'Stefan'];
 
-            $scope.workItems = [
+            $scope.workItemsss = [
                 [{
+                    id: '12',
                     title: 'Login with Security',
                     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, dicta laboriosam obcaecati, ea reiciendis optio maiores voluptates autem quam excepturi quidem nostrum repellendus. Quia cumque explicabo eum aspernatur, doloremque officia.'
                 }, {
+                    id: '123',
                     title: 'Fix VG',
                     description: 'Mera information 2'
                 }, {
+                    id: '1234',
                     title: 'Entreprenörskap',
                     description: 'Mera information 3'
                 }, {
+                    id: '12345',
                     title: 'Säkerhetskurs',
                     description: 'Mera information 4'
                 }],
                 [{
+                    id: '123456',
                     title: 'Write Html',
                     description: 'Mera information 5'
                 }, {
+                    id: '1234567',
                     title: 'Write Css',
                     description: 'Mera information 6'
                 }, {
+                    id: '12345678',
                     title: 'Write Javascript',
                     description: 'Mera information 7'
                 }, {
+                    id: '123456789',
                     title: 'Fix Angular',
                     description: 'Mera information 8'
                 }],
                 [{
+                    id: '1231213',
                     title: 'Fix G',
                     description: 'Mera information 9'
                 }, {
+                    id: '1231323',
                     title: 'Be happy',
                     description: 'Mera information 10'
                 }, {
+                    id: '1231312312',
                     title: 'SteffeKUNG',
                     description: 'Mera information 11'
                 }, {
+                    id: '123123123',
                     title: 'Http anrop',
                     description: 'Mera information 12'
                 }]
@@ -137,10 +150,29 @@ angular.module('trellocloneApp')
                     // over: function () {
                     //     console.log("list " + _listName + ": over");
                     // },
-                    receive: function () {
-                        // console.log("list " + _listName + ": receive");
-                        if (_listName === 'B') {
+                    receive: function (something) {
+                        console.log("list " + _listName + ": received " + something.toElement.id);
+                        //------------------------------------>Här ska http-anropet göras!!<------------------------------------------
+
+                        switch (_listName) {
+
+                        case 'NOT_STARTED':
                             $("#progress").addClass("fa-pulse");
+                            workItemFactory.setNotStarted(something.toElement.id);
+                            refresh()
+                            break;
+                        case 'IN_PROGRESS':
+                            $("#progress").addClass("fa-pulse");
+                            workItemFactory.setInProgress(something.toElement.id);
+                            refresh()
+                            break;
+                        case 'COMPLETED':
+                            $("#progress").addClass("fa-pulse");
+                            workItemFactory.setCompleted(something.toElement.id);
+                            refresh()
+                            break;
+
+                        default:
                         }
                     },
                     remove: function () {
@@ -166,7 +198,7 @@ angular.module('trellocloneApp')
                 return options;
             }
 
-            $scope.sortableOptionsList = [createOptions('A'), createOptions('B'), createOptions('C')];
+            $scope.sortableOptionsList = [createOptions('NOT_STARTED'), createOptions('IN_PROGRESS'), createOptions('COMPLETED')];
 
             $scope.logModels = function () {
                 $scope.sortingLog = [];
