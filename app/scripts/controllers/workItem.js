@@ -6,10 +6,13 @@ angular.module('trellocloneApp')
             $scope.status;
             $scope.issues;
 
-            $scope.workItemsInProgress = getInProgress();
-            $scope.notStartedWorkItems = getNotStartedWorkItems();
-            $scope.completedWorkItems = getCompletedWorkItems();
+            refresh();
 
+            function refresh() {
+                $scope.workItemsInProgress = getInProgress();
+                $scope.notStartedWorkItems = getNotStartedWorkItems();
+                $scope.completedWorkItems = getCompletedWorkItems();
+            }
 
             function getInProgress() {
                 workItemFactory.getWorkItemsInProgress()
@@ -150,8 +153,22 @@ angular.module('trellocloneApp')
                         console.log("list " + _listName + ": received " + something.toElement.id);
                         //------------------------------------>Här ska http-anropet göras!!<------------------------------------------
 
-                        if (_listName === 'B') {
+                        switch (_listName) {
+
+                        case 'NOT_STARTED':
                             $("#progress").addClass("fa-pulse");
+                            workItemFactory.setNotStarted(something.toElement.id);
+                            break;
+                        case 'IN_PROGRESS':
+                            $("#progress").addClass("fa-pulse");
+                            workItemFactory.setInProgress(something.toElement.id);
+                            break;
+                        case 'COMPLETED':
+                            $("#progress").addClass("fa-pulse");
+                            workItemFactory.setCompleted(something.toElement.id);
+                            break;
+
+                        default:
                         }
                     },
                     remove: function () {
