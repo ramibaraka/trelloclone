@@ -28,12 +28,14 @@
 			<div class="panel panel-danger" ng-repeat="workitem in workItems[0]" style="margin-bottom:10px">
 				<div class="panel-heading">
 					{{workitem.title}}
+					<span class="badge pull-right">
+						<i class="fa fa-exclamation"></i>
+					</span>
 				</div>
 				<li class="list-group-item" data-toggle="collapse" data-target="#collapseExample{{$index}}" aria-expanded="false" aria-controls="collapseExample{{$index}}">
 
-					<span class="badge">
-						<i class="fa fa-exclamation"></i>
-					</span>
+
+						<i class="fa pull-right fa-chevron-down"></i>
 
 					<p>Default description of task...</p>
 
