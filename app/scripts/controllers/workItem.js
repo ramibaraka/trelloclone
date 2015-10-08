@@ -147,7 +147,7 @@ angular.module('trellocloneApp')
                     //     console.log("list " + _listName + ": over");
                     // },
                     receive: function (something) {
-                        console.log("list " + _listName + ": received " + something.toElement.data - id);
+                        console.log("list " + _listName + ": received " + something.toElement.id);
                         //------------------------------------>Här ska http-anropet göras!!<------------------------------------------
 
                         if (_listName === 'B') {
