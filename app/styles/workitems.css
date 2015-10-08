@@ -11,10 +11,8 @@
 /* End of "Micro clearfix" */
 
 /*body { width: 480px; margin: 20px auto; }*/
-.w-container { background: background: #e5e5e5; display: block;}
-.w-section { float: left; display: inline;  padding: 6px; margin: 20px 10px; text-align:left; background: #F6F6F6; min-width: 220px; max-width: 300px; border-radius: 3px; }
+.w-section {/* background: #F6F6F6; padding: 6px; margin: 20px 10px; float: left; display: inline; text-align:left;  min-width: 220px; max-width: 300px; border-radius: 3px; */}
 .w-status { text-align: left; font-size: 14px; font-style: "Helvetica Neue", Helvetica, Arial, sans-serif; margin: 8px 3px; color: #777777}
 .list-group { margin-bottom: 5px;}
 .list-group-item { border-radius: 3px; border:0px ; border-bottom: 1px solid #ccc;}
-.w-table-name { margin-left: 10px; color: #777777; }
-.w-header {  }
+.w-header h1 { color: #777777; }
