@@ -134,8 +134,8 @@ angular.module('trellocloneApp')
                     // over: function () {
                     //     console.log("list " + _listName + ": over");
                     // },
-                    receive: function () {
-                        // console.log("list " + _listName + ": receive");
+                    receive: function (something) {
+                        console.log("list " + _listName + ": received " + something.toElement.innerText.trim());
                         if (_listName === 'B') {
                             $("#progress").addClass("fa-pulse");
                         }
@@ -163,7 +163,7 @@ angular.module('trellocloneApp')
                 return options;
             }
 
-            $scope.sortableOptionsList = [createOptions('A'), createOptions('B'), createOptions('C')];
+            $scope.sortableOptionsList = [createOptions('NOT_STARTED'), createOptions('IN_PROGRESS'), createOptions('COMPLETED')];
 
             $scope.logModels = function () {
                 $scope.sortingLog = [];
