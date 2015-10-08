@@ -29,11 +29,11 @@
 
 		<div class="w-section col-md-4">
 			<h3 class="text-center">NOT STARTED <i class="fa fa-bars"></i> </h3>
-			<div ui-sortable="sortableOptionsList[0]" class="apps-container screen" ng-model="workItems[0]">
+			<div ui-sortable="sortableOptionsList[0]" class="apps-container screen" ng-model="notStartedWorkItems">
 				<!-- Gammal div utan info osv...</!-->
 				<!-- <div class="bg-danger app" ng-repeat="app in workItems[0]">{{app.title}}</div> -->
 
-				<div class="panel panel-danger" ng-repeat="workitem in workItems[0]" style="margin-bottom:10px">
+				<div class="panel panel-danger" ng-repeat="workitem in notStartedWorkItems" style="margin-bottom:10px">
 					<div class="panel-heading">
 						{{workitem.title}}
 						<span class="badge pull-right">

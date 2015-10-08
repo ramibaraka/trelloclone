@@ -17,7 +17,7 @@ angular.module('trellocloneApp')
                         $scope.workItemsInProgress = workItemsInProgress;
                     })
                     .error(function (error) {
-                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci'];
+                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -28,7 +28,7 @@ angular.module('trellocloneApp')
                         $scope.notStartedWorkItems = notStartedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.notStartedWorkItems = ['fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'fel2', 'fel3'];
+                        $scope.notStartedWorkItems = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -39,7 +39,7 @@ angular.module('trellocloneApp')
                         $scope.completedWorkItems = completedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'Fel3'];
+                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2', 'Fel3'];
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }
@@ -111,8 +111,8 @@ angular.module('trellocloneApp')
             function createOptions(listName) {
                 var _listName = listName;
                 var options = {
-                    placeholder: "app",
-                    connectWith: ".apps-container",
+                    placeholder: 'app',
+                    connectWith: '.apps-container',
                     // activate: function () {
                     //     console.log("list " + _listName + ": activate");
                     // },
@@ -135,15 +135,15 @@ angular.module('trellocloneApp')
                     //     console.log("list " + _listName + ": over");
                     // },
                     receive: function (something) {
-                        console.log("list " + _listName + ": received " + something.toElement.innerText.trim());
+                        console.log('list ' + _listName + ': received ' + something.toElement.innerText.trim());
                         if (_listName === 'B') {
-                            $("#progress").addClass("fa-pulse");
+                            $('#progress').addClass('fa-pulse');
                         }
                     },
                     remove: function () {
                             // console.log("list " + _listName + ": remove");
                             if (_listName === 'B' && $scope.workItems[1].length === 0) {
-                                $("#progress").removeClass("fa-pulse");
+                                $('#progress').removeClass('fa-pulse');
                             }
                         }
                         // ,
