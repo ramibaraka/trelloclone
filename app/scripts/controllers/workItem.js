@@ -12,12 +12,13 @@ angular.module('trellocloneApp')
                 $scope.workItemsInProgress = getInProgress();
                 $scope.notStartedWorkItems = getNotStartedWorkItems();
                 $scope.completedWorkItems = getCompletedWorkItems();
+
             }
 
             function getInProgress() {
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
-                        $scope.workItemsInProgress = workItemsInProgress;
+                        $scope.workItems[0] = workItemsInProgress;
                     })
                     .error(function (error) {
                         $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci'];
@@ -67,7 +68,7 @@ angular.module('trellocloneApp')
 
             $scope.contributors = ['Osama', 'Sandra', 'Rami', 'Stefan'];
 
-            $scope.workItems = [
+            $scope.workItemsss = [
                 [{
                     id: '12',
                     title: 'Login with Security',
@@ -158,14 +159,17 @@ angular.module('trellocloneApp')
                         case 'NOT_STARTED':
                             $("#progress").addClass("fa-pulse");
                             workItemFactory.setNotStarted(something.toElement.id);
+                            refresh()
                             break;
                         case 'IN_PROGRESS':
                             $("#progress").addClass("fa-pulse");
                             workItemFactory.setInProgress(something.toElement.id);
+                            refresh()
                             break;
                         case 'COMPLETED':
                             $("#progress").addClass("fa-pulse");
                             workItemFactory.setCompleted(something.toElement.id);
+                            refresh()
                             break;
 
                         default:
