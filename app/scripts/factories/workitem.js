@@ -21,16 +21,16 @@ angular.module('trellocloneApp')
             return $http.get(urlBase + '/status/' + status);
         };
 
-    workItemFactory.getCompletedWorkItems = function () {
+        workItemFactory.getCompletedWorkItems = function () {
             return $http.get(urlBase + '/status/completed');
         };
 
         workItemFactory.getWorkItemsInProgress = function () {
-            return $http.get(urlBase + '/status/inprogress');
+            return $http.get(urlBase + '/status/in_progress');
         };
 
         workItemFactory.getNotStartedWorkItems = function () {
-            return $http.get(urlBase + '/status/notstarted');
+            return $http.get(urlBase + '/status/not_started');
         };
 
         workItemFactory.getWorkItemsHistory = function (fromDate, toDate) {
@@ -42,15 +42,21 @@ angular.module('trellocloneApp')
         };
 
         workItemFactory.setCompleted = function (id) {
-            return $http.put(urlBase + '/' + id + '/completed');
+            return $http.put(urlBase + '/' + id + '/status', {
+                status: 'COMPLETED'
+            });
         };
 
         workItemFactory.setInProgress = function (id) {
-            return $http.put(urlBase + '/' + id + '/inprogress');
+            return $http.put(urlBase + '/' + id + '/status', {
+                status: 'IN_PROGRESS'
+            });
         };
 
         workItemFactory.setNotStarted = function (id) {
-            return $http.put(urlBase + '/' + id + '/notstarted');
+            return $http.put(urlBase + '/' + id + '/status', {
+                status: 'NOT_STARTED'
+            });
         };
 
         workItemFactory.updateIssue = function (id, issue) {

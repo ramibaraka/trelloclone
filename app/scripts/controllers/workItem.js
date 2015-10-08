@@ -6,19 +6,27 @@ angular.module('trellocloneApp')
             $scope.status;
             $scope.issues;
 
-            refresh();
+
 
             function refresh() {
-                $scope.workItemsInProgress = getInProgress();
-                $scope.notStartedWorkItems = getNotStartedWorkItems();
-                $scope.completedWorkItems = getCompletedWorkItems();
-
+                setTimeout(function () {
+                    getInProgress();
+                    getNotStartedWorkItems();
+                    getCompletedWorkItems();
+                }, 1000);
             }
+
+
+            // setInterval(function () {
+            //     getInProgress();
+            //     getNotStartedWorkItems();
+            //     getCompletedWorkItems();
+            // }, 1000);
 
             function getInProgress() {
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
-                        $scope.workItems[0] = workItemsInProgress;
+                        $scope.workItems[1] = workItemsInProgress.workitems;
                     })
                     .error(function (error) {
                         $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci'];
@@ -29,7 +37,8 @@ angular.module('trellocloneApp')
             function getNotStartedWorkItems() {
                 workItemFactory.getNotStartedWorkItems()
                     .success(function (notStartedWorkItems) {
-                        $scope.notStartedWorkItems = notStartedWorkItems;
+                        $scope.workItems[0] = notStartedWorkItems.workitems;
+                        // $scope.notStartedWorkItems = notStartedWorkItems;
                     })
                     .error(function (error) {
                         $scope.notStartedWorkItems = ['fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'fel2', 'fel3'];
@@ -40,7 +49,8 @@ angular.module('trellocloneApp')
             function getCompletedWorkItems() {
                 workItemFactory.getCompletedWorkItems()
                     .success(function (completedWorkItems) {
-                        $scope.completedWorkItems = completedWorkItems;
+                        $scope.workItems[2] = completedWorkItems.workitems;
+                        // $scope.completedWorkItems = completedWorkItems;
                     })
                     .error(function (error) {
                         $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'Fel3'];
@@ -68,7 +78,7 @@ angular.module('trellocloneApp')
 
             $scope.contributors = ['Osama', 'Sandra', 'Rami', 'Stefan'];
 
-            $scope.workItemsss = [
+            $scope.workItems = [
                 [{
                     id: '12',
                     title: 'Login with Security',
@@ -157,19 +167,17 @@ angular.module('trellocloneApp')
                         switch (_listName) {
 
                         case 'NOT_STARTED':
-                            $("#progress").addClass("fa-pulse");
                             workItemFactory.setNotStarted(something.toElement.id);
-                            refresh()
+                            refresh();
                             break;
                         case 'IN_PROGRESS':
                             $("#progress").addClass("fa-pulse");
                             workItemFactory.setInProgress(something.toElement.id);
-                            refresh()
+                            refresh();
                             break;
                         case 'COMPLETED':
-                            $("#progress").addClass("fa-pulse");
                             workItemFactory.setCompleted(something.toElement.id);
-                            refresh()
+                            refresh();
                             break;
 
                         default:
