@@ -71,15 +71,25 @@
 										</div>
 										<div class="form-group">
 											<label for="description">Description</label>
-											<textarea class="form-control" id="description">{{workitem.description}}</textarea>
+											<textarea class="form-control" id="description">
+												{{workitem.description}}
+											</textarea>
 										</div>
 										<div class="form-group">
 											<label for="description">Contributors</label>
-											<div class="well well-sm" ng-repeat="contributor in contributors">{{contributor}}</div>
+											<div class="well well-sm" ng-repeat="contributor in contributors">
+												{{contributor}}
+											</div>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-pencil"></i> Save changes</button>
-											<button type="button" class="btn btn-danger pull-right" data-dismiss="modal"><i class="fa fa-times"></i> Delete workitem</button>
+											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
+												<i class="fa fa-pencil"></i>
+												Save changes
+											</button>
+											<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">
+												<i class="fa fa-times"></i>
+												Delete workitem
+											</button>
 										</div>
 									</form>
 								</div>
@@ -93,15 +103,46 @@
 
 		<div class="w-section col-md-4">
 			<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
-			<div ui-sortable="sortableOptionsList[1]" class="apps-container screen" ng-model="workItems[1]">
-				<div class="bg-info app" ng-repeat="app in workItems[1]">{{app.title}}</div>
+			<div class="apps-container screen" ng-model="workItems[1]">
+				<div class="bg-info app" ng-repeat="app in notStartedWorkItems">
+					{{app.title}}</br>
+
+					button set status 
+
+					<!-- Single button -->
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Change Status 
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+
+							<div class="btn-group-vertical" role="group">
+								<button type="button" class="btn btn-sm">In progress</button>
+								<button type="button" class="btn btn-sm">In progress</button>
+							</div>
+						</ul>
+					</div>
+
+				</div>
 			</div>
 		</div>
+<!-- 
+		<div class="w-section col-md-4">
+			<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
+			<div ui-sortable="sortableOptionsList[1]" class="apps-container screen" ng-model="workItems[1]">
+				<div class="bg-info app" ng-repeat="app in workItems[1]">
+					{{app.title}}
+				</div>
+			</div>
+		</div>  -->
 
 		<div class="w-section col-md-4">
 			<h3 class="text-center">COMPLETED <i class="fa fa-check"></i></h3>
 			<div ui-sortable="sortableOptionsList[2]" class="apps-container screen" ng-model="workItems[2]">
-				<div class="bg-success app" ng-repeat="app in workItems[2]">{{app.title}}</div>
+				<div class="bg-success app" ng-repeat="app in workItems[2]">
+					{{app.title}}
+				</div>
 			</div>
 		</div>
 	</div>

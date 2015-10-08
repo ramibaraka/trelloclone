@@ -15,6 +15,9 @@ angular.module('trellocloneApp')
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
                         $scope.workItemsInProgress = workItemsInProgress;
+                        console.log(workItemsInProgress[0]);
+                        console.log(workItemsInProgress[0].description);
+
                     })
                     .error(function (error) {
                         $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci'];
