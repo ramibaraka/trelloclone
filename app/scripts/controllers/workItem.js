@@ -66,41 +66,53 @@ angular.module('trellocloneApp')
 
             $scope.workItems = [
                 [{
+                    id: '12',
                     title: 'Login with Security',
                     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, dicta laboriosam obcaecati, ea reiciendis optio maiores voluptates autem quam excepturi quidem nostrum repellendus. Quia cumque explicabo eum aspernatur, doloremque officia.'
                 }, {
+                    id: '123',
                     title: 'Fix VG',
                     description: 'Mera information 2'
                 }, {
+                    id: '1234',
                     title: 'Entreprenörskap',
                     description: 'Mera information 3'
                 }, {
+                    id: '12345',
                     title: 'Säkerhetskurs',
                     description: 'Mera information 4'
                 }],
                 [{
+                    id: '123456',
                     title: 'Write Html',
                     description: 'Mera information 5'
                 }, {
+                    id: '1234567',
                     title: 'Write Css',
                     description: 'Mera information 6'
                 }, {
+                    id: '12345678',
                     title: 'Write Javascript',
                     description: 'Mera information 7'
                 }, {
+                    id: '123456789',
                     title: 'Fix Angular',
                     description: 'Mera information 8'
                 }],
                 [{
+                    id: '1231213',
                     title: 'Fix G',
                     description: 'Mera information 9'
                 }, {
+                    id: '1231323',
                     title: 'Be happy',
                     description: 'Mera information 10'
                 }, {
+                    id: '1231312312',
                     title: 'SteffeKUNG',
                     description: 'Mera information 11'
                 }, {
+                    id: '123123123',
                     title: 'Http anrop',
                     description: 'Mera information 12'
                 }]
@@ -135,7 +147,9 @@ angular.module('trellocloneApp')
                     //     console.log("list " + _listName + ": over");
                     // },
                     receive: function (something) {
-                        console.log("list " + _listName + ": received " + something.toElement.innerText.trim());
+                        console.log("list " + _listName + ": received " + something.toElement.data - id);
+                        //------------------------------------>Här ska http-anropet göras!!<------------------------------------------
+
                         if (_listName === 'B') {
                             $("#progress").addClass("fa-pulse");
                         }
