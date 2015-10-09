@@ -20,50 +20,51 @@
 		<!--  ------------------------------------------ NEW WORKITEM ------------------------------------------------- -->
 
 		<!-- <form ng-submit="addWorkItem()" class="form"> -->
-	<button type="button" ng-model="workItem" class="btn btn-primary" data-toggle="modal" data-target="#newModal"> Add new work-item <i class="fa fa-calendar-plus-o"></i> </button>
-								<i class="fa fa-edit"></i>
-							</button>
+		<button type="button" ng-model="workItem" class="btn btn-primary" data-toggle="modal" data-target="#newModal"> 
+			Add new work-item <i class="fa fa-calendar-plus-o"></i> 
+			<i class="fa fa-edit"></i>
+		</button>
 	</span>
 	<!-- Modal -->
-		<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newWorkItemLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="newWorkItemLabel">New Work-item</h4>
-					</div>
-					<div class="modal-body">
+	<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newWorkItemLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="newWorkItemLabel">New Work-item</h4>
+				</div>
+				<div class="modal-body">
 
-						<form name="createWorkItem" ng-submit="saveNewWorkItem(formData, user)">
-							<div class="form-group">
-								<label for="title">Title</label>
-								<input id="title" type="text" class="form-control" value="Enter a title" ng-model="formData.title">
+					<form name="createWorkItem" ng-submit="saveNewWorkItem(formData, user)">
+						<div class="form-group">
+							<label for="title">Title</label>
+							<input id="title" type="text" class="form-control" value="Enter a title" ng-model="formData.title">
+						</div>
+
+						<div class="form-group">
+							<label for="description">Description</label>
+							<textarea id="description" class="form-control" ng-model="formData.description"></textarea>
+						</div>
+
+						<div class="form-group">
+							<label for="description">Assign this workitem to user:</label>
+							<div class="input-group" ng-repeat="user in users">
+								<span class="input-group-addon">
+									<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToNewWorkitem(user.userId)">
+								</span>
+								<label class="form-control" aria-label="..."> {{user.username}} </label>
 							</div>
+						</div>
 
-							<div class="form-group">
-								<label for="description">Description</label>
-								<textarea id="description" class="form-control" ng-model="formData.description"></textarea>
-							</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-floppy-o"></i> Create workitem </button>
+						</div>
+					</form>
 
-							<div class="form-group">
-								<label for="description">Assign this workitem to user:</label>
-								<div class="input-group" ng-repeat="user in users">
-									<span class="input-group-addon">
-										<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToNewWorkitem(user.userId)">
-									</span>
-									<label class="form-control" aria-label="..."> {{user.username}} </label>
-								</div>
-							</div>
-
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-floppy-o"></i> Create workitem </button>
-							</div>
-						</form>
-
-					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
 	<div class="w-content row">
 
@@ -77,153 +78,159 @@
 
 				<div class="panel panel-danger" ng-repeat="workitem in notStartedWorkItems" style="margin-bottom:10px">
 					<div class="panel-heading">
-					<div class="panel-heading" id ="{{workitem.id}}">
-						{{workitem.title}}
-						<span class="badge pull-right" ng-show="{{workitem.hasOwnProperty('issue')}}">
-							<i class="fa fa-exclamation"></i>
-						</span>
-					</div>
-					<li class="list-group-item" data-toggle="collapse" data-target="#collapseExample{{workitem.id}}" aria-expanded="false" aria-controls="collapseExample{{workitem.id}}">
-
-						<i class="fa pull-right fa-chevron-down"></i>
-
-						<p>{{workitem.description}}</p>
-						<div class="collapse" id="collapseExample{{workitem.id}}">
-							<p>{{workitem.description}}</p>
-							<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal{{workitem.id}}" ng-click="initFormData(workitem)">
-								<i class="fa fa-edit"></i>
-							</button>
-							<br>
+						<div class="panel-heading" id ="{{workitem.id}}">
+							{{workitem.title}}
+							<span class="badge pull-right" ng-show="{{workitem.hasOwnProperty('issue')}}">
+								<i class="fa fa-exclamation"></i>
+							</span>
 						</div>
-					</li>
-					<!-- Modal -->
-					<div class="modal fade" id="myModal{{workitem.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">{{workitem.title}}</h4>
-								</div>
-								<div class="modal-body">
+						<li class="list-group-item" data-toggle="collapse" data-target="#collapseExample{{workitem.id}}" aria-expanded="false" aria-controls="collapseExample{{workitem.id}}">
 
-									<form name="editWorkItem" ng-submit="saveWorkItem(workitem)">
-										<div class="form-group">
-											<label for="title">Title</label>
-											<input id="title" type="text" class="form-control" ng-model="formData.title">
-										</div>
+							<i class="fa pull-right fa-chevron-down"></i>
 
-										<div class="form-group">
-											<label for="description">Description</label>
-											<textarea id="description" class="form-control" ng-model="formData.description"></textarea>
-										</div>
+							<p>{{workitem.description}}</p>
+							<div class="collapse" id="collapseExample{{workitem.id}}">
+								<p>{{workitem.description}}</p>
+								<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal{{workitem.id}}" ng-click="initFormData(workitem)">
+									<i class="fa fa-edit"></i>
+								</button>
+								<br>
+							</div>
+						</li>
+						<!-- Modal -->
+						<div class="modal fade" id="myModal{{workitem.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">{{workitem.title}}</h4>
+									</div>
+									<div class="modal-body">
 
-										<div class="form-group">
-											<label for="description">User</label>
-											<div class="input-group" ng-repeat="user in users">
-												<span class="input-group-addon">
-													<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToWorkItem(user.userId, workitem.id)">
-												</span>
-												<label class="form-control" aria-label="..." value="{{user.username}}">
+										<form name="editWorkItem" ng-submit="saveWorkItem(workitem)">
+											<div class="form-group">
+												<label for="title">Title</label>
+												<input id="title" type="text" class="form-control" ng-model="formData.title">
 											</div>
-										</div>
 
-										<!-- Har ett issue -->
-										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
-											<label for="issue">Issue</label>
-											<input type="text" class="form-control" id="issue" ng-model="formData.issue.description"></input>
-										</div>
-										<!-- Har inte ett issue -->
-										<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
-											<label for="issue">Add new issue</label>
-											<input type="text" class="form-control" id="issue" ng-model="formData.issue.description"></input>
-										</div>
+											<div class="form-group">
+												<label for="description">Description</label>
+												<textarea id="description" class="form-control" ng-model="formData.description"></textarea>
+											</div>
 
-										<div class="modal-footer">
-											<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Save changes</button>
-											<button type="button" class="btn btn-danger pull-right"><i class="fa fa-times"></i> Delete workitem</button>
-										</div>
-									</form>
+											<div class="form-group">
+												<label for="description">User</label>
+												<div class="input-group" ng-repeat="user in users">
+													<span class="input-group-addon">
+														<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToWorkItem(user.userId, workitem.id)">
+													</span>
+													<label class="form-control" aria-label="..." value="{{user.username}}"></label>
+													</div>
+												</div>
 
+												<!-- Har ett issue -->
+												<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
+													<label for="issue">Issue</label>
+													<input type="text" class="form-control" id="issue" ng-model="formData.issue.description">
+												</div>
+												<!-- Har inte ett issue -->
+												<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
+													<label for="issue">Add new issue</label>
+													<input type="text" class="form-control" id="issue" ng-model="formData.issue.description">
+												</div>
+
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-primary pull-left">
+														<i class="fa fa-pencil"></i>
+														Save changes
+													</button>
+													<button type="button" class="btn btn-danger pull-right">
+														<i class="fa fa-times"></i>
+														Delete workitem
+													</button>
+												</div>
+											</form>
+
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+				</div>
+				<!--  ------------------------------------------ IN PROGRESS ------------------------------------------------- -->
 
-		<!--  ------------------------------------------ IN PROGRESS ------------------------------------------------- -->
+				<div class="w-section col-md-4">
+					<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
+					<div ui-sortable="sortableOptionsList[1]" class="apps-container screen" ng-model="workItems[1]">
 
-		<div class="w-section col-md-4">
-			<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
-			<div ui-sortable="sortableOptionsList[1]" class="apps-container screen" ng-model="workItems[1]">
-
-				<div class="panel panel-info" ng-repeat="workitem in inProgressWorkItems" style="margin-bottom:10px">
-					<div class="panel-heading" id ="{{workitem.id}}">
-						{{workitem.title}}
-						<span class="badge pull-right" ng-show="{{workitem.hasOwnProperty('issue')}}">
-							<i class="fa fa-exclamation"></i>
-						</span>
-					</div>
-					<li class="list-group-item" data-toggle="collapse" data-target="#collapseExample{{workitem.id}}" aria-expanded="false" aria-controls="collapseExample{{workitem.id}}">
+						<div class="panel panel-info" ng-repeat="workitem in inProgressWorkItems" style="margin-bottom:10px">
+							<div class="panel-heading" id ="{{workitem.id}}">
+								{{workitem.title}}
+								<span class="badge pull-right" ng-show="{{workitem.hasOwnProperty('issue')}}">
+									<i class="fa fa-exclamation"></i>
+								</span>
+							</div>
+							<li class="list-group-item" data-toggle="collapse" data-target="#collapseExample{{workitem.id}}" aria-expanded="false" aria-controls="collapseExample{{workitem.id}}">
 
 
-						<i class="fa pull-right fa-chevron-down"></i>
+								<i class="fa pull-right fa-chevron-down"></i>
 
-						<p>{{workitem.description}}</p>
+								<p>{{workitem.description}}</p>
 
-						<div class="collapse" id="collapseExample{{workitem.id}}">
-							<p>{{workitem.description}}</p>
-							<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal{{workitem.id}}">
-								<i class="fa fa-edit"></i>
-							</button>
-							<br>
-						</div>
-					</li>
-					<!-- Modal -->
-					<div class="modal fade" id="myModal{{workitem.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">{{workitem.title}}</h4>
+								<div class="collapse" id="collapseExample{{workitem.id}}">
+									<p>{{workitem.description}}</p>
+									<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal{{workitem.id}}">
+										<i class="fa fa-edit"></i>
+									</button>
+									<br>
 								</div>
-								<div class="modal-body">
-									<form>
-										<div class="form-group">
-											<label for="title">Title</label>
-											<input type="text" class="form-control" id="title" value="{{workitem.title}}">
+							</li>
+							<!-- Modal -->
+							<div class="modal fade" id="myModal{{workitem.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title" id="myModalLabel">{{workitem.title}}</h4>
 										</div>
-										<div class="form-group">
-											<label for="description">Description</label>
-											<textarea class="form-control" id="description">{{workitem.description}}</textarea>
+										<div class="modal-body">
+											<form>
+												<div class="form-group">
+													<label for="title">Title</label>
+													<input type="text" class="form-control" id="title" value="{{workitem.title}}">
+												</div>
+												<div class="form-group">
+													<label for="description">Description</label>
+													<textarea class="form-control" id="description">{{workitem.description}}</textarea>
+												</div>
+												<div class="form-group">
+													<label for="description">User</label>
+													<div class="well well-sm" ng-repeat="user in users">{{user.username}}</div>
+												</div>
+												<!-- Har ett issue -->
+												<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
+													<label for="issue">Issue</label>
+													<input type="text" class="form-control" id="issue" value="{{workitem.issue.description}}"></input>
+												</div>
+												<!-- Har inte ett issue -->
+												<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
+													<label for="issue">Add new issue</label>
+													<input type="text" class="form-control" id="issue"></input>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-pencil"></i> Save changes</button>
+													<button type="button" class="btn btn-danger pull-right" data-dismiss="modal"><i class="fa fa-times"></i> Delete workitem</button>
+												</div>
+											</form>
 										</div>
-										<div class="form-group">
-											<label for="description">User</label>
-											<div class="well well-sm" ng-repeat="user in users">{{user.username}}</div>
-										</div>
-										<!-- Har ett issue -->
-										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
-											<label for="issue">Issue</label>
-											<input type="text" class="form-control" id="issue" value="{{workitem.issue.description}}"></input>
-										</div>
-										<!-- Har inte ett issue -->
-										<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
-											<label for="issue">Add new issue</label>
-											<input type="text" class="form-control" id="issue"></input>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-pencil"></i> Save changes</button>
-											<button type="button" class="btn btn-danger pull-right" data-dismiss="modal"><i class="fa fa-times"></i> Delete workitem</button>
-										</div>
-									</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 <!-- 
 		<div class="w-section col-md-4">
 			<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
@@ -288,12 +295,12 @@
 										<!-- Har ett issue -->
 										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
 											<label for="issue">Issue</label>
-											<input type="text" class="form-control" id="issue" value="{{workitem.issue.description}}"></input>
+											<input type="text" class="form-control" id="issue" value="{{workitem.issue.description}}">
 										</div>
 										<!-- Har inte ett issue -->
 										<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
 											<label for="issue">Add new issue</label>
-											<input type="text" class="form-control" id="issue"></input>
+											<input type="text" class="form-control" id="issue">
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-pencil"></i> Save changes</button>
