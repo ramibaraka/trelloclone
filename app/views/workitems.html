@@ -19,7 +19,6 @@
 
 		<!--  ------------------------------------------ NEW WORKITEM ------------------------------------------------- -->
 
-		<!-- <form ng-submit="addWorkItem()" class="form"> -->
 		<button type="button" ng-model="workItem" class="btn btn-primary" data-toggle="modal" data-target="#newModal"> Add new work-item <i class="fa fa-calendar-plus-o"></i> </button>
 		<i class="fa fa-edit"></i>
 
@@ -34,25 +33,15 @@
 				</div>
 				<div class="modal-body">
 
-					<form name="createWorkItem" ng-submit="saveNewWorkItem(formData, user)">
+					<form name="createWorkItem" ng-submit="saveNewWorkItem(newWorkItem, user)">
 						<div class="form-group">
 							<label for="title">Title</label>
-							<input id="title" type="text" class="form-control" value="Enter a title" ng-model="formData.title">
+							<input id="title" type="text" class="form-control" value="Enter a title" ng-model="newWorkItem.title">
 						</div>
 
 						<div class="form-group">
 							<label for="description">Description</label>
-							<textarea id="description" class="form-control" ng-model="formData.description"></textarea>
-						</div>
-
-						<div class="form-group">
-							<label for="description">Assign this workitem to user:</label>
-							<div class="input-group" ng-repeat="user in users">
-								<span class="input-group-addon">
-									<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToNewWorkitem(user.userId)">
-								</span>
-								<label class="form-control" aria-label="..."> {{user.username}} </label>
-							</div>
+							<textarea id="description" class="form-control" ng-model="newWorkItem.description"></textarea>
 						</div>
 
 						<div class="modal-footer">
@@ -139,7 +128,7 @@
 
 										<div class="modal-footer">
 											<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Save changes</button>
-											<button type="button" class="btn btn-danger pull-right"><i class="fa fa-times"></i> Delete workitem</button>
+											<button type="button" class="btn btn-danger pull-right" ng-click="deleteWorkItem(workitem.id)"><i class="fa fa-times" ></i> Delete workitem</button>
 										</div>
 									</form>
 
@@ -222,7 +211,7 @@
 
 										<div class="modal-footer">
 											<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Save changes</button>
-											<button type="button" class="btn btn-danger pull-right"><i class="fa fa-times"></i> Delete workitem</button>
+											<button type="button" class="btn btn-danger pull-right" ng-click="deleteWorkItem(workitem.id)"><i class="fa fa-times" ></i> Delete workitem</button>
 										</div>
 									</form>
 								</div>
@@ -305,7 +294,7 @@
 
 										<div class="modal-footer">
 											<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Save changes</button>
-											<button type="button" class="btn btn-danger pull-right"><i class="fa fa-times"></i> Delete workitem</button>
+											<button type="button" class="btn btn-danger pull-right" ng-click="deleteWorkItem(workitem.id)"><i class="fa fa-times" ></i> Delete workitem</button>
 										</div>
 									</form>
 								</div>

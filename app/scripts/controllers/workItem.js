@@ -8,6 +8,7 @@ angular.module('trellocloneApp')
             $scope.issues;
             $scope.users = [];
 
+            $scope.newWorkItem = {};
             $scope.formData = {};
 
             refresh();
@@ -18,7 +19,7 @@ angular.module('trellocloneApp')
                     getNotStartedWorkItems();
                     getCompletedWorkItems();
                     getAllUsers();
-                }, 200);
+                }, 500);
             }
 
             function getAllUsers() {
@@ -66,17 +67,15 @@ angular.module('trellocloneApp')
             }
 
             $scope.deleteWorkItem = function (id) {
+                console.dir(id);
                 workItemFactory.deleteWorkItem(id)
                     .success(function () {
                         $scope.status = 'Deleted workitem! Refreshing workitem list...';
-                        /*for (var i = 0; i < $scope.workItems.length; i++) {
-                            var workItem = $scope.workItems[i];
-                            if (workItem.id === id) {
-                                $scope.workItems.splice(i, 1);
-                                break;
-                            }
-                        }*/
+
                         $scope.issues = null;
+                        refresh();
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
                     })
                     .error(function (error) {
                         $scope.status = 'Unable to delete workitem: ' + error.message;
@@ -260,19 +259,26 @@ angular.module('trellocloneApp')
                 refresh();
             };
 
-            $scope.saveNewWorkItem = function (workItem, user) {
-                var workitem = angular.copy($scope.formData);
+            $scope.saveNewWorkItem = function () {
+
+                $('.modal-backdrop').remove();
+                $('.modal').remove();
+                $('body').removeClass('modal-open');
+
+                var workitem = angular.copy($scope.newWorkItem);
+                $scope.newWorkItem = {};
+
+                console.dir(workitem);
                 workItemFactory.saveWorkItem(workitem);
-                userFactory.addWorkItemToUser(user.id, workItem);
+
+                refresh();
             };
 
             $scope.initFormData = function (workItem) {
                 $scope.formData = angular.copy(workItem);
-                console.dir($scope.formData);
             };
 
             $scope.setUserToWorkItem = function (userId, workItemId) {
-                // console.log('userId: ' + userId + ' workItemId: ' + workItemId);
                 userFactory.addWorkItemToUser(userId, workItemId);
             };
         }
