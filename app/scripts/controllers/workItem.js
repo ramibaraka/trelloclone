@@ -6,22 +6,15 @@ angular.module('trellocloneApp')
             $scope.status;
             $scope.issues;
 
-
+            refresh();
 
             function refresh() {
                 setTimeout(function () {
                     getInProgress();
                     getNotStartedWorkItems();
                     getCompletedWorkItems();
-                }, 1000);
+                }, 200);
             }
-
-
-            // setInterval(function () {
-            //     getInProgress();
-            //     getNotStartedWorkItems();
-            //     getCompletedWorkItems();
-            // }, 1000);
 
             function getInProgress() {
                 workItemFactory.getWorkItemsInProgress()
@@ -185,7 +178,7 @@ angular.module('trellocloneApp')
                     },
                     remove: function () {
                             // console.log("list " + _listName + ": remove");
-                            if (_listName === 'B' && $scope.workItems[1].length === 0) {
+                            if (_listName === 'IN_PROGRESS' && $scope.workItems[1].length === 0) {
                                 $("#progress").removeClass("fa-pulse");
                             }
                         }
