@@ -34,7 +34,7 @@
 					</div>
 					<div class="modal-body">
 
-						<form name="createWorkItem" ng-submit="saveWorkItem(formData)">
+						<form name="createWorkItem" ng-submit="saveNewWorkItem(formData, user)">
 							<div class="form-group">
 								<label for="title">Title</label>
 								<input id="title" type="text" class="form-control" value="Enter a title" ng-model="formData.title">
@@ -49,19 +49,14 @@
 								<label for="description">Assign this workitem to user:</label>
 								<div class="input-group" ng-repeat="user in users">
 									<span class="input-group-addon">
-										<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToWorkItem(user.userId, 1)">
+										<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToNewWorkitem(user.userId)">
 									</span>
 									<label class="form-control" aria-label="..."> {{user.username}} </label>
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label for="issue">Add an issue</label>
-								<input type="text" class="form-control" id="issue" ng-model="formData.issue"></input>
-							</div>
-
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-floppy-o"></i> Create workitem</button>
+								<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-floppy-o"></i> Create workitem </button>
 							</div>
 						</form>
 

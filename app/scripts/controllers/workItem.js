@@ -194,6 +194,12 @@ angular.module('trellocloneApp')
                 // }
             };
 
+            $scope.saveNewWorkItem = function (workItem, user) {
+                var workitem = angular.copy($scope.formData);
+                workItemFactory.saveWorkItem(workitem);
+                userFactory.addWorkItemToUser(user.id, workItem);
+            };
+
             $scope.initFormData = function (workItem) {
                 $scope.formData = angular.copy(workItem);
             };
