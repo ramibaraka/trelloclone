@@ -47,7 +47,6 @@ angular.module('trellocloneApp')
                 workItemFactory.getNotStartedWorkItems()
                     .success(function (notStartedWorkItems) {
                         $scope.workItems[0] = notStartedWorkItems.workitems;
-                        console.dir($scope.workItems);
                     })
                     .error(function (error) {
                         $scope.notStartedWorkItems = ['fel1', 'fel2', 'fel3'];
@@ -67,7 +66,6 @@ angular.module('trellocloneApp')
             }
 
             $scope.deleteWorkItem = function (id) {
-                console.dir(id);
                 workItemFactory.deleteWorkItem(id)
                     .success(function () {
                         $scope.status = 'Deleted workitem! Refreshing workitem list...';
@@ -160,30 +158,7 @@ angular.module('trellocloneApp')
                 var options = {
                     placeholder: 'app',
                     connectWith: '.apps-container',
-                    // activate: function () {
-                    //     console.log("list " + _listName + ": activate");
-                    // },
-                    // beforeStop: function () {
-                    //     console.log("list " + _listName + ": beforeStop");
-                    // },
-                    // change: function () {
-                    //     console.log("list " + _listName + ": change");
-                    // },
-                    // create: function () {
-                    //     console.log("list " + _listName + ": create");
-                    // },
-                    // deactivate: function () {
-                    //     console.log("list " + _listName + ": deactivate");
-                    // },
-                    // out: function () {
-                    //     console.log("list " + _listName + ": out");
-                    // },
-                    // over: function () {
-                    //     console.log("list " + _listName + ": over");
-                    // },
                     receive: function (something) {
-                        console.log('list ' + _listName + ': received ' + something.toElement.id);
-                        //------------------------------------>Här ska http-anropet göras!!<------------------------------------------
 
                         switch (_listName) {
 
@@ -205,24 +180,10 @@ angular.module('trellocloneApp')
                         }
                     },
                     remove: function () {
-                            // console.log("list " + _listName + ": remove");
-                            if (_listName === 'IN_PROGRESS' && $scope.workItems[1].length === 0) {
-                                $("#progress").removeClass("fa-pulse");
-                            }
+                        if (_listName === 'IN_PROGRESS' && $scope.workItems[1].length === 0) {
+                            $("#progress").removeClass("fa-pulse");
                         }
-                        // ,
-                        // sort: function () {
-                        //     console.log("list " + _listName + ": sort");
-                        // },
-                        // start: function () {
-                        //     console.log("list " + _listName + ": start");
-                        // },
-                        // stop: function () {
-                        //     console.log("list " + _listName + ": stop");
-                        // },
-                        // update: function () {
-                        //     console.log("list " + _listName + ": update");
-                        // }
+                    }
                 };
                 return options;
             }
@@ -268,7 +229,6 @@ angular.module('trellocloneApp')
                 var workitem = angular.copy($scope.newWorkItem);
                 $scope.newWorkItem = {};
 
-                console.dir(workitem);
                 workItemFactory.saveWorkItem(workitem);
 
                 refresh();
