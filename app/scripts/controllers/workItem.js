@@ -6,6 +6,7 @@ angular.module('trellocloneApp')
 
             $scope.status;
             $scope.issues;
+            $scope.users = [];
 
             $scope.formData = {};
 
@@ -13,19 +14,30 @@ angular.module('trellocloneApp')
 
             function refresh() {
                 setTimeout(function () {
-                    getInProgress();
+                    getInProgressWorkItems();
                     getNotStartedWorkItems();
                     getCompletedWorkItems();
+                    getAllUsers();
                 }, 200);
             }
 
-            function getInProgress() {
+            function getAllUsers() {
+                userFactory.getAllUsers()
+                    .success(function (usersResponse) {
+                        $scope.users = usersResponse.users;
+                    })
+                    .error(function (error) {
+                        $scope.status = 'Unable to load users data: ' + error.message;
+                    });
+            }
+
+            function getInProgressWorkItems() {
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
                         $scope.workItems[1] = workItemsInProgress.workitems;
                     })
                     .error(function (error) {
-                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci'];
+                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -34,10 +46,10 @@ angular.module('trellocloneApp')
                 workItemFactory.getNotStartedWorkItems()
                     .success(function (notStartedWorkItems) {
                         $scope.workItems[0] = notStartedWorkItems.workitems;
-                        // $scope.notStartedWorkItems = notStartedWorkItems;
+                        console.dir($scope.workItems);
                     })
                     .error(function (error) {
-                        $scope.notStartedWorkItems = ['fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'fel2', 'fel3'];
+                        $scope.notStartedWorkItems = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -46,10 +58,9 @@ angular.module('trellocloneApp')
                 workItemFactory.getCompletedWorkItems()
                     .success(function (completedWorkItems) {
                         $scope.workItems[2] = completedWorkItems.workitems;
-                        // $scope.completedWorkItems = completedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'Fel3'];
+                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2', 'Fel3'];
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }
@@ -71,24 +82,6 @@ angular.module('trellocloneApp')
                         $scope.status = 'Unable to delete workitem: ' + error.message;
                     });
             };
-
-            $scope.contributors = [{
-                username: 'Osama',
-                userId: 'blabla',
-                id: 1
-            }, {
-                username: 'Sandra',
-                userId: 'hejhej111',
-                id: 3
-            }, {
-                username: 'Rami',
-                userId: 'hejhej222',
-                id: 4
-            }, {
-                username: 'Stefan',
-                userId: 'hejhej333',
-                id: 11
-            }];
 
             $scope.workItems = [
                 [{
@@ -143,14 +136,31 @@ angular.module('trellocloneApp')
                     description: 'Mera information 12'
                 }]
             ];
+            // $scope.contributors = [{
+            //     username: 'Osama',
+            //     userId: 'blabla',
+            //     id: 1
+            // }, {
+            //     username: 'Sandra',
+            //     userId: 'hejhej111',
+            //     id: 2
+            // }, {
+            //     username: 'Rami',
+            //     userId: 'hejhej222',
+            //     id: 3
+            // }, {
+            //     username: 'Stefan',
+            //     userId: 'hejhej333',
+            //     id: 4
+            // }];
 
             $scope.sortingLog = [];
 
             function createOptions(listName) {
                 var _listName = listName;
                 var options = {
-                    placeholder: "app",
-                    connectWith: ".apps-container",
+                    placeholder: 'app',
+                    connectWith: '.apps-container',
                     // activate: function () {
                     //     console.log("list " + _listName + ": activate");
                     // },
@@ -173,7 +183,7 @@ angular.module('trellocloneApp')
                     //     console.log("list " + _listName + ": over");
                     // },
                     receive: function (something) {
-                        console.log("list " + _listName + ": received " + something.toElement.id);
+                        console.log('list ' + _listName + ': received ' + something.toElement.id);
                         //------------------------------------>Här ska http-anropet göras!!<------------------------------------------
 
                         switch (_listName) {
@@ -183,7 +193,7 @@ angular.module('trellocloneApp')
                             refresh();
                             break;
                         case 'IN_PROGRESS':
-                            $("#progress").addClass("fa-pulse");
+                            $('#progress').addClass('fa-pulse');
                             workItemFactory.setInProgress(something.toElement.id);
                             refresh();
                             break;
@@ -250,8 +260,15 @@ angular.module('trellocloneApp')
                 refresh();
             };
 
+            $scope.saveNewWorkItem = function (workItem, user) {
+                var workitem = angular.copy($scope.formData);
+                workItemFactory.saveWorkItem(workitem);
+                userFactory.addWorkItemToUser(user.id, workItem);
+            };
+
             $scope.initFormData = function (workItem) {
                 $scope.formData = angular.copy(workItem);
+                console.dir($scope.formData);
             };
 
             $scope.setUserToWorkItem = function (userId, workItemId) {
