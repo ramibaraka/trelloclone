@@ -5,20 +5,22 @@ angular.module('trellocloneApp')
 
             $scope.status;
             $scope.issues;
+            $scope.addWorkItemIcon = '<i class="fa fa-calendar-plus-o"></i>';
 
             refresh();
 
             function refresh() {
-                $scope.workItemsInProgress = getInProgress();
-                $scope.notStartedWorkItems = getNotStartedWorkItems();
-                $scope.completedWorkItems = getCompletedWorkItems();
-
+                setTimeout(function () {
+                    getInProgressWorkItems();
+                    getNotStartedWorkItems();
+                    getCompletedWorkItems();
+                }, 200);
             }
 
-            function getInProgress() {
+            function getInProgressWorkItems() {
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
-                        $scope.workItems[0] = workItemsInProgress;
+                        $scope.inProgressWorkItems = workItemsInProgress;
                     })
                     .error(function (error) {
                         $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3'];
@@ -68,60 +70,6 @@ angular.module('trellocloneApp')
 
             $scope.contributors = ['Osama', 'Sandra', 'Rami', 'Stefan'];
 
-            $scope.workItemsss = [
-                [{
-                    id: '12',
-                    title: 'Login with Security',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, dicta laboriosam obcaecati, ea reiciendis optio maiores voluptates autem quam excepturi quidem nostrum repellendus. Quia cumque explicabo eum aspernatur, doloremque officia.'
-                }, {
-                    id: '123',
-                    title: 'Fix VG',
-                    description: 'Mera information 2'
-                }, {
-                    id: '1234',
-                    title: 'Entreprenörskap',
-                    description: 'Mera information 3'
-                }, {
-                    id: '12345',
-                    title: 'Säkerhetskurs',
-                    description: 'Mera information 4'
-                }],
-                [{
-                    id: '123456',
-                    title: 'Write Html',
-                    description: 'Mera information 5'
-                }, {
-                    id: '1234567',
-                    title: 'Write Css',
-                    description: 'Mera information 6'
-                }, {
-                    id: '12345678',
-                    title: 'Write Javascript',
-                    description: 'Mera information 7'
-                }, {
-                    id: '123456789',
-                    title: 'Fix Angular',
-                    description: 'Mera information 8'
-                }],
-                [{
-                    id: '1231213',
-                    title: 'Fix G',
-                    description: 'Mera information 9'
-                }, {
-                    id: '1231323',
-                    title: 'Be happy',
-                    description: 'Mera information 10'
-                }, {
-                    id: '1231312312',
-                    title: 'SteffeKUNG',
-                    description: 'Mera information 11'
-                }, {
-                    id: '123123123',
-                    title: 'Http anrop',
-                    description: 'Mera information 12'
-                }]
-            ];
-
             $scope.sortingLog = [];
 
             function createOptions(listName) {
@@ -157,7 +105,6 @@ angular.module('trellocloneApp')
                         switch (_listName) {
 
                         case 'NOT_STARTED':
-                            $('#progress').addClass('fa-pulse');
                             workItemFactory.setNotStarted(something.toElement.id);
                             refresh();
                             break;
@@ -167,7 +114,6 @@ angular.module('trellocloneApp')
                             refresh();
                             break;
                         case 'COMPLETED':
-                            $('#progress').addClass('fa-pulse');
                             workItemFactory.setCompleted(something.toElement.id);
                             refresh();
                             break;
@@ -177,8 +123,8 @@ angular.module('trellocloneApp')
                     },
                     remove: function () {
                             // console.log("list " + _listName + ": remove");
-                            if (_listName === 'B' && $scope.workItems[1].length === 0) {
-                                $('#progress').removeClass('fa-pulse');
+                            if (_listName === 'IN_PROGRESS' && $scope.workItems[1].length === 0) {
+                                $("#progress").removeClass("fa-pulse");
                             }
                         }
                         // ,

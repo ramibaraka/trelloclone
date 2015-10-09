@@ -6,9 +6,10 @@ textarea { resize: vertical;}
 }
 
 .apps-container {
-  border: 2px dashed blue;
+  border: 2px dashed rgba(133, 133, 255, 0.7);
   padding: 5px;
   min-height: 50px;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .app {
