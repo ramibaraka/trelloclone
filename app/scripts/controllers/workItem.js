@@ -55,13 +55,13 @@ angular.module('trellocloneApp')
                 workItemFactory.deleteWorkItem(id)
                     .success(function () {
                         $scope.status = 'Deleted workitem! Refreshing workitem list...';
-                        for (var i = 0; i < $scope.workItems.length; i++) {
+                        /*for (var i = 0; i < $scope.workItems.length; i++) {
                             var workItem = $scope.workItems[i];
                             if (workItem.id === id) {
                                 $scope.workItems.splice(i, 1);
                                 break;
                             }
-                        }
+                        }*/
                         $scope.issues = null;
                     })
                     .error(function (error) {

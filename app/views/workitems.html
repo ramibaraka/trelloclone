@@ -40,6 +40,7 @@
 				<!-- <div class="bg-danger app" ng-repeat="app in workItems[0]">{{app.title}}</div> -->
 
 				<div class="panel panel-danger" ng-repeat="workitem in workItems[0]" style="margin-bottom:10px">
+
 					<div class="panel-heading" id ="{{workitem.id}}">
 						{{workitem.title}}
 						<span class="badge pull-right" ng-show="{{workitem.hasOwnProperty('issue')}}">
@@ -50,9 +51,8 @@
 
 						<i class="fa pull-right fa-chevron-down"></i>
 
-						<p> Default description of task...</p>
+						<p>{{workitem.description}}</p>
 						<div class="collapse" id="collapseExample{{workitem.id}}">
-							<p>{{workitem.description}}</p>
 							<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal{{workitem.id}}">
 								<i class="fa fa-edit"></i>
 							</button>
@@ -90,7 +90,7 @@
 												<i class="fa fa-pencil"></i>
 												Save changes
 											</button>
-											<button type="button" class="btn btn-danger pull-right" data-dismiss="modal">
+											<button type="button" ng-click="deleteWorkItem({{workitem.id}})" class="btn btn-danger pull-right" data-dismiss="modal">
 												<i class="fa fa-times"></i>
 												Delete workitem
 											</button>
@@ -122,7 +122,7 @@
 
 						<i class="fa pull-right fa-chevron-down"></i>
 
-						<p>Default description of task...</p>
+						<p>{{workitem.description}}</p>
 
 						<div class="collapse" id="collapseExample{{workitem.id}}">
 							<p>{{workitem.description}}</p>
@@ -195,7 +195,7 @@
 
 						<i class="fa pull-right fa-chevron-down"></i>
 
-						<p>Default description of task...</p>
+						<p>{{workitem.description}}</p>
 
 						<div class="collapse" id="collapseExample{{workitem.id}}">
 							<p>{{workitem.description}}</p>
