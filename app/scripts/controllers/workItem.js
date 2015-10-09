@@ -9,6 +9,11 @@ angular.module('trellocloneApp')
             $scope.users = [];
 
             $scope.newWorkItem = {};
+            $scope.workItems = [
+                [],
+                [],
+                []
+            ];
             $scope.formData = {};
 
             refresh();
@@ -28,6 +33,12 @@ angular.module('trellocloneApp')
                         $scope.users = usersResponse.users;
                     })
                     .error(function (error) {
+                        $scope.users =
+                            [{
+                                username: 'user',
+                                userId: 'userId',
+                                id: 1
+                            }];
                         $scope.status = 'Unable to load users data: ' + error.message;
                     });
             }
@@ -38,7 +49,11 @@ angular.module('trellocloneApp')
                         $scope.workItems[1] = workItemsInProgress.workitems;
                     })
                     .error(function (error) {
-                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3'];
+                        $scope.workItems[1] = [{
+                            id: '1',
+                            title: 'title1',
+                            description: 'description1'
+                        }];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -49,7 +64,11 @@ angular.module('trellocloneApp')
                         $scope.workItems[0] = notStartedWorkItems.workitems;
                     })
                     .error(function (error) {
-                        $scope.notStartedWorkItems = ['fel1', 'fel2', 'fel3'];
+                        $scope.workItems[0] = [{
+                            id: '2',
+                            title: 'title2',
+                            description: 'description2'
+                        }];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -60,7 +79,11 @@ angular.module('trellocloneApp')
                         $scope.workItems[2] = completedWorkItems.workitems;
                     })
                     .error(function (error) {
-                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2', 'Fel3'];
+                        $scope.workItems[2] = [{
+                            id: '3',
+                            title: 'title3',
+                            description: 'description3'
+                        }]
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }
@@ -79,79 +102,6 @@ angular.module('trellocloneApp')
                         $scope.status = 'Unable to delete workitem: ' + error.message;
                     });
             };
-
-            $scope.workItems = [
-                [{
-                    id: '12',
-                    title: 'Login with Security',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, dicta laboriosam obcaecati, ea reiciendis optio maiores voluptates autem quam excepturi quidem nostrum repellendus. Quia cumque explicabo eum aspernatur, doloremque officia.'
-                }, {
-                    id: '123',
-                    title: 'Fix VG',
-                    description: 'Mera information 2'
-                }, {
-                    id: '1234',
-                    title: 'Entreprenörskap',
-                    description: 'Mera information 3'
-                }, {
-                    id: '12345',
-                    title: 'Säkerhetskurs',
-                    description: 'Mera information 4'
-                }],
-                [{
-                    id: '123456',
-                    title: 'Write Html',
-                    description: 'Mera information 5'
-                }, {
-                    id: '1234567',
-                    title: 'Write Css',
-                    description: 'Mera information 6'
-                }, {
-                    id: '12345678',
-                    title: 'Write Javascript',
-                    description: 'Mera information 7'
-                }, {
-                    id: '123456789',
-                    title: 'Fix Angular',
-                    description: 'Mera information 8'
-                }],
-                [{
-                    id: '1231213',
-                    title: 'Fix G',
-                    description: 'Mera information 9'
-                }, {
-                    id: '1231323',
-                    title: 'Be happy',
-                    description: 'Mera information 10'
-                }, {
-                    id: '1231312312',
-                    title: 'SteffeKUNG',
-                    description: 'Mera information 11'
-                }, {
-                    id: '123123123',
-                    title: 'Http anrop',
-                    description: 'Mera information 12'
-                }]
-            ];
-            // $scope.contributors = [{
-            //     username: 'Osama',
-            //     userId: 'blabla',
-            //     id: 1
-            // }, {
-            //     username: 'Sandra',
-            //     userId: 'hejhej111',
-            //     id: 2
-            // }, {
-            //     username: 'Rami',
-            //     userId: 'hejhej222',
-            //     id: 3
-            // }, {
-            //     username: 'Stefan',
-            //     userId: 'hejhej333',
-            //     id: 4
-            // }];
-
-            $scope.sortingLog = [];
 
             function createOptions(listName) {
                 var _listName = listName;
@@ -189,17 +139,6 @@ angular.module('trellocloneApp')
             }
 
             $scope.sortableOptionsList = [createOptions('NOT_STARTED'), createOptions('IN_PROGRESS'), createOptions('COMPLETED')];
-
-            $scope.logModels = function () {
-                $scope.sortingLog = [];
-                for (var i = 0; i < $scope.workItems.length; i++) {
-                    var logEntry = $scope.workItems[i].map(function (x) {
-                        return x.title;
-                    }).join(', ');
-                    logEntry = 'container ' + (i + 1) + ': ' + logEntry;
-                    $scope.sortingLog.push(logEntry);
-                }
-            };
 
             $scope.addWorkItem = function () {
                 $scope.workItems[0].push({
