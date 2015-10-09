@@ -9,38 +9,74 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu pull-right">
-				<li ng-repeat="contributor in contributors"><a href="#/">{{contributor}}</a></li>
+				<li ng-repeat="user in users"><a href="#/">{{user.username}}</a></li>
 			</ul>
 		</div>
 	</div>
 
 	<span class="input-group-btn">
-		<input type="submit" class="btn btn-primary" value="refresh" ng-click="refresh()">
-	</span>
+		<input type="submit" class="btn btn-primary" value="Refresh" ng-click="refresh()">
 
-	<div class="w-form">
-		<form ng-submit="addWorkItem()" class="form">
-			<div class="input-group">
-				<input type="text" class="form-control" ng-model="workItem" placeholder="Write a workItem">
-				<span class="input-group-btn">
-					<input type="submit" class="btn btn-primary" value="add">
-				</span>
+		<!--  ------------------------------------------ NEW WORKITEM ------------------------------------------------- -->
+
+		<!-- <form ng-submit="addWorkItem()" class="form"> -->
+	<button type="button" ng-model="workItem" class="btn btn-primary" data-toggle="modal" data-target="#newModal"> Add new work-item <i class="fa fa-calendar-plus-o"></i> </button>
+								<i class="fa fa-edit"></i>
+							</button>
+	</span>
+	<!-- Modal -->
+		<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newWorkItemLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="newWorkItemLabel">New Work-item</h4>
+					</div>
+					<div class="modal-body">
+
+						<form name="createWorkItem" ng-submit="saveNewWorkItem(formData, user)">
+							<div class="form-group">
+								<label for="title">Title</label>
+								<input id="title" type="text" class="form-control" value="Enter a title" ng-model="formData.title">
+							</div>
+
+							<div class="form-group">
+								<label for="description">Description</label>
+								<textarea id="description" class="form-control" ng-model="formData.description"></textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="description">Assign this workitem to user:</label>
+								<div class="input-group" ng-repeat="user in users">
+									<span class="input-group-addon">
+										<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToNewWorkitem(user.userId)">
+									</span>
+									<label class="form-control" aria-label="..."> {{user.username}} </label>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-floppy-o"></i> Create workitem </button>
+							</div>
+						</form>
+
+					</div>
+				</div>
 			</div>
-		</form>
-	</div>
+		</div>
 
 	<div class="w-content row">
 
 		<!--  ------------------------------------------ NOT STARTED ------------------------------------------------- -->
 
 		<div class="w-section col-md-4">
+
 			<h3 class="text-center">NOT STARTED <i class="fa fa-bars"></i></h3>
 			<div ui-sortable="sortableOptionsList[0]" class="apps-container screen" ng-model="workItems[0]">
-				<!-- Gammal div utan info osv...</!-->
-				<!-- <div class="bg-danger app" ng-repeat="app in workItems[0]">{{app.title}}</div> -->
 
-				<div class="panel panel-danger" ng-repeat="workitem in workItems[0]" style="margin-bottom:10px">
 
+				<div class="panel panel-danger" ng-repeat="workitem in notStartedWorkItems" style="margin-bottom:10px">
+					<div class="panel-heading">
 					<div class="panel-heading" id ="{{workitem.id}}">
 						{{workitem.title}}
 						<span class="badge pull-right" ng-show="{{workitem.hasOwnProperty('issue')}}">
@@ -53,7 +89,8 @@
 
 						<p>{{workitem.description}}</p>
 						<div class="collapse" id="collapseExample{{workitem.id}}">
-							<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal{{workitem.id}}">
+							<p>{{workitem.description}}</p>
+							<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal{{workitem.id}}" ng-click="initFormData(workitem)">
 								<i class="fa fa-edit"></i>
 							</button>
 							<br>
@@ -68,34 +105,45 @@
 									<h4 class="modal-title" id="myModalLabel">{{workitem.title}}</h4>
 								</div>
 								<div class="modal-body">
-									<form>
+
+									<form name="editWorkItem" ng-submit="saveWorkItem(workitem)">
 										<div class="form-group">
 											<label for="title">Title</label>
-											<input type="text" class="form-control" id="title" value="{{workitem.title}}">
+											<input id="title" type="text" class="form-control" ng-model="formData.title">
 										</div>
+
 										<div class="form-group">
 											<label for="description">Description</label>
-											<textarea class="form-control" id="description">
-												{{workitem.description}}
-											</textarea>
+											<textarea id="description" class="form-control" ng-model="formData.description"></textarea>
 										</div>
+
 										<div class="form-group">
-											<label for="description">Contributors</label>
-											<div class="well well-sm" ng-repeat="contributor in contributors">
-												{{contributor}}
+											<label for="description">User</label>
+											<div class="input-group" ng-repeat="user in users">
+												<span class="input-group-addon">
+													<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToWorkItem(user.userId, workitem.id)">
+												</span>
+												<label class="form-control" aria-label="..." value="{{user.username}}">
 											</div>
 										</div>
+
+										<!-- Har ett issue -->
+										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
+											<label for="issue">Issue</label>
+											<input type="text" class="form-control" id="issue" ng-model="formData.issue.description"></input>
+										</div>
+										<!-- Har inte ett issue -->
+										<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
+											<label for="issue">Add new issue</label>
+											<input type="text" class="form-control" id="issue" ng-model="formData.issue.description"></input>
+										</div>
+
 										<div class="modal-footer">
-											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal">
-												<i class="fa fa-pencil"></i>
-												Save changes
-											</button>
-											<button type="button" ng-click="deleteWorkItem({{workitem.id}})" class="btn btn-danger pull-right" data-dismiss="modal">
-												<i class="fa fa-times"></i>
-												Delete workitem
-											</button>
+											<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Save changes</button>
+											<button type="button" class="btn btn-danger pull-right"><i class="fa fa-times"></i> Delete workitem</button>
 										</div>
 									</form>
+
 								</div>
 							</div>
 						</div>
@@ -110,7 +158,7 @@
 			<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
 			<div ui-sortable="sortableOptionsList[1]" class="apps-container screen" ng-model="workItems[1]">
 
-				<div class="panel panel-info" ng-repeat="workitem in workItems[1]" style="margin-bottom:10px">
+				<div class="panel panel-info" ng-repeat="workitem in inProgressWorkItems" style="margin-bottom:10px">
 					<div class="panel-heading" id ="{{workitem.id}}">
 						{{workitem.title}}
 						<span class="badge pull-right" ng-show="{{workitem.hasOwnProperty('issue')}}">
@@ -151,8 +199,18 @@
 											<textarea class="form-control" id="description">{{workitem.description}}</textarea>
 										</div>
 										<div class="form-group">
-											<label for="description">Contributors</label>
-											<div class="well well-sm" ng-repeat="contributor in contributors">{{contributor}}</div>
+											<label for="description">User</label>
+											<div class="well well-sm" ng-repeat="user in users">{{user.username}}</div>
+										</div>
+										<!-- Har ett issue -->
+										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
+											<label for="issue">Issue</label>
+											<input type="text" class="form-control" id="issue" value="{{workitem.issue.description}}"></input>
+										</div>
+										<!-- Har inte ett issue -->
+										<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
+											<label for="issue">Add new issue</label>
+											<input type="text" class="form-control" id="issue"></input>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-pencil"></i> Save changes</button>
@@ -182,7 +240,7 @@
 			<h3 class="text-center">COMPLETED <i class="fa fa-check"></i></h3>
 			<div ui-sortable="sortableOptionsList[2]" class="apps-container screen" ng-model="workItems[2]">
 
-				<div class="panel panel-success" ng-repeat="workitem in workItems[2]" style="margin-bottom:10px">
+				<div class="panel panel-success" ng-repeat="workitem in completedWorkItems" style="margin-bottom:10px">
 					<div class="panel-heading" id = "{{workitem.id}}">
 						{{workitem.title}}
 						
@@ -224,8 +282,18 @@
 											<textarea class="form-control" id="description">{{workitem.description}}</textarea>
 										</div>
 										<div class="form-group">
-											<label for="description">Contributors</label>
-											<div class="well well-sm" ng-repeat="contributor in contributors">{{contributor}}</div>
+											<label for="description">User</label>
+											<div class="well well-sm" ng-repeat="user in users">{{user.username}}</div>
+										</div>
+										<!-- Har ett issue -->
+										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
+											<label for="issue">Issue</label>
+											<input type="text" class="form-control" id="issue" value="{{workitem.issue.description}}"></input>
+										</div>
+										<!-- Har inte ett issue -->
+										<div class="form-group" ng-hide="{{workitem.hasOwnProperty('issue')}}">
+											<label for="issue">Add new issue</label>
+											<input type="text" class="form-control" id="issue"></input>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-primary pull-left" data-dismiss="modal"><i class="fa fa-pencil"></i> Save changes</button>

@@ -1,28 +1,30 @@
 'use strict';
 angular.module('trellocloneApp')
     .controller('WorkItemCtrl', ['$scope', 'workItemFactory',
-        function ($scope, workItemFactory) {
+        function ($scope, workItemFactory, userFactory) {
 
             $scope.status;
             $scope.issues;
+
+            $scope.formData = {};
 
             refresh();
 
             function refresh() {
                 setTimeout(function () {
-                    getInProgress();
+                    getInProgressWorkItems();
                     getNotStartedWorkItems();
                     getCompletedWorkItems();
                 }, 200);
             }
 
-            function getInProgress() {
+            function getInProgressWorkItems() {
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
-                        $scope.workItems[1] = workItemsInProgress.workitems;
+                        $scope.inProgressWorkItems = workItemsInProgress;
                     })
                     .error(function (error) {
-                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci'];
+                        $scope.workItemsInProgress = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -30,11 +32,10 @@ angular.module('trellocloneApp')
             function getNotStartedWorkItems() {
                 workItemFactory.getNotStartedWorkItems()
                     .success(function (notStartedWorkItems) {
-                        $scope.workItems[0] = notStartedWorkItems.workitems;
-                        // $scope.notStartedWorkItems = notStartedWorkItems;
+                        $scope.notStartedWorkItems = notStartedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.notStartedWorkItems = ['fel1Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'fel2', 'fel3'];
+                        $scope.notStartedWorkItems = ['fel1', 'fel2', 'fel3'];
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -42,11 +43,10 @@ angular.module('trellocloneApp')
             function getCompletedWorkItems() {
                 workItemFactory.getCompletedWorkItems()
                     .success(function (completedWorkItems) {
-                        $scope.workItems[2] = completedWorkItems.workitems;
-                        // $scope.completedWorkItems = completedWorkItems;
+                        $scope.completedWorkItems = completedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci', 'Fel3'];
+                        $scope.completedWorkItems = ['WorkItem1 hejehessd eh', 'Fel2', 'Fel3'];
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }
@@ -69,69 +69,32 @@ angular.module('trellocloneApp')
                     });
             };
 
-            $scope.contributors = ['Osama', 'Sandra', 'Rami', 'Stefan'];
-
-            $scope.workItems = [
-                [{
-                    id: '12',
-                    title: 'Login with Security',
-                    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, dicta laboriosam obcaecati, ea reiciendis optio maiores voluptates autem quam excepturi quidem nostrum repellendus. Quia cumque explicabo eum aspernatur, doloremque officia.'
-                }, {
-                    id: '123',
-                    title: 'Fix VG',
-                    description: 'Mera information 2'
-                }, {
-                    id: '1234',
-                    title: 'Entreprenörskap',
-                    description: 'Mera information 3'
-                }, {
-                    id: '12345',
-                    title: 'Säkerhetskurs',
-                    description: 'Mera information 4'
-                }],
-                [{
-                    id: '123456',
-                    title: 'Write Html',
-                    description: 'Mera information 5'
-                }, {
-                    id: '1234567',
-                    title: 'Write Css',
-                    description: 'Mera information 6'
-                }, {
-                    id: '12345678',
-                    title: 'Write Javascript',
-                    description: 'Mera information 7'
-                }, {
-                    id: '123456789',
-                    title: 'Fix Angular',
-                    description: 'Mera information 8'
-                }],
-                [{
-                    id: '1231213',
-                    title: 'Fix G',
-                    description: 'Mera information 9'
-                }, {
-                    id: '1231323',
-                    title: 'Be happy',
-                    description: 'Mera information 10'
-                }, {
-                    id: '1231312312',
-                    title: 'SteffeKUNG',
-                    description: 'Mera information 11'
-                }, {
-                    id: '123123123',
-                    title: 'Http anrop',
-                    description: 'Mera information 12'
-                }]
-            ];
+            $scope.users = userFactory.getAllUsers();
+            // $scope.contributors = [{
+            //     username: 'Osama',
+            //     userId: 'blabla',
+            //     id: 1
+            // }, {
+            //     username: 'Sandra',
+            //     userId: 'hejhej111',
+            //     id: 2
+            // }, {
+            //     username: 'Rami',
+            //     userId: 'hejhej222',
+            //     id: 3
+            // }, {
+            //     username: 'Stefan',
+            //     userId: 'hejhej333',
+            //     id: 4
+            // }];
 
             $scope.sortingLog = [];
 
             function createOptions(listName) {
                 var _listName = listName;
                 var options = {
-                    placeholder: "app",
-                    connectWith: ".apps-container",
+                    placeholder: 'app',
+                    connectWith: '.apps-container',
                     // activate: function () {
                     //     console.log("list " + _listName + ": activate");
                     // },
@@ -154,7 +117,7 @@ angular.module('trellocloneApp')
                     //     console.log("list " + _listName + ": over");
                     // },
                     receive: function (something) {
-                        console.log("list " + _listName + ": received " + something.toElement.id);
+                        console.log('list ' + _listName + ': received ' + something.toElement.id);
                         //------------------------------------>Här ska http-anropet göras!!<------------------------------------------
 
                         switch (_listName) {
@@ -164,7 +127,7 @@ angular.module('trellocloneApp')
                             refresh();
                             break;
                         case 'IN_PROGRESS':
-                            $("#progress").addClass("fa-pulse");
+                            $('#progress').addClass('fa-pulse');
                             workItemFactory.setInProgress(something.toElement.id);
                             refresh();
                             break;
@@ -217,6 +180,33 @@ angular.module('trellocloneApp')
                     title: this.workItem
                 });
                 $scope.workItem = '';
+            };
+
+            $scope.saveWorkItem = function () {
+                var workitem = angular.copy($scope.formData);
+                workItemFactory.saveWorkItem(workitem);
+                // console.log('SUBMITTED');
+                // console.log('formData:' + result);
+                // for (var k in result) {
+                //     if (result.hasOwnProperty(k)) {
+                //         console.log('Key is ' + k + ', value is ' + result[k]);
+                //     }
+                // }
+            };
+
+            $scope.saveNewWorkItem = function (workItem, user) {
+                var workitem = angular.copy($scope.formData);
+                workItemFactory.saveWorkItem(workitem);
+                userFactory.addWorkItemToUser(user.id, workItem);
+            };
+
+            $scope.initFormData = function (workItem) {
+                $scope.formData = angular.copy(workItem);
+            };
+
+            $scope.setUserToWorkItem = function (userId, workItemId) {
+                // console.log('userId: ' + userId + ' workItemId: ' + workItemId);
+                workItemFactory.setUserToWorkItem(userId, workItemId);
             };
         }
     ]);

@@ -47,6 +47,12 @@ angular.module('trellocloneApp')
             });
         };
 
+        workItemFactory.setUserToWorkItem = function (userId, workItemId) {
+            return $http.put('http://localhost:8080/taskboard-web/users' + '/' + userId + '/workitems', {
+                id: workItemId
+            });
+        };
+
         workItemFactory.setInProgress = function (id) {
             return $http.put(urlBase + '/' + id + '/status', {
                 status: 'IN_PROGRESS'
