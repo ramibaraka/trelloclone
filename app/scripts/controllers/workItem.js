@@ -7,6 +7,8 @@ angular.module('trellocloneApp')
             $scope.issues;
             $scope.addWorkItemIcon = '<i class="fa fa-calendar-plus-o"></i>';
 
+            $scope.formData = {};
+
             refresh();
 
             function refresh() {
@@ -68,7 +70,23 @@ angular.module('trellocloneApp')
                     });
             };
 
-            $scope.contributors = ['Osama', 'Sandra', 'Rami', 'Stefan'];
+            $scope.contributors = [{
+                username: 'Osama',
+                userId: 'blabla',
+                id: 1
+            }, {
+                username: 'Sandra',
+                userId: 'hejhej111',
+                id: 2
+            }, {
+                username: 'Rami',
+                userId: 'hejhej222',
+                id: 3
+            }, {
+                username: 'Stefan',
+                userId: 'hejhej333',
+                id: 4
+            }];
 
             $scope.sortingLog = [];
 
@@ -162,6 +180,27 @@ angular.module('trellocloneApp')
                     title: this.workItem
                 });
                 $scope.workItem = '';
+            };
+
+            $scope.saveWorkItem = function () {
+                var workitem = angular.copy($scope.formData);
+                workItemFactory.saveWorkItem(workitem);
+                // console.log('SUBMITTED');
+                // console.log('formData:' + result);
+                // for (var k in result) {
+                //     if (result.hasOwnProperty(k)) {
+                //         console.log('Key is ' + k + ', value is ' + result[k]);
+                //     }
+                // }
+            };
+
+            $scope.initFormData = function (workItem) {
+                $scope.formData = angular.copy(workItem);
+            };
+
+            $scope.setUserToWorkItem = function (userId, workItemId) {
+                // console.log('userId: ' + userId + ' workItemId: ' + workItemId);
+                workItemFactory.setUserToWorkItem(userId, workItemId);
             };
         }
     ]);
