@@ -1,11 +1,10 @@
 'use strict';
 angular.module('trellocloneApp')
     .controller('WorkItemCtrl', ['$scope', 'workItemFactory',
-        function ($scope, workItemFactory) {
+        function ($scope, workItemFactory, userFactory) {
 
             $scope.status;
             $scope.issues;
-            $scope.addWorkItemIcon = '<i class="fa fa-calendar-plus-o"></i>';
 
             $scope.formData = {};
 
@@ -70,23 +69,24 @@ angular.module('trellocloneApp')
                     });
             };
 
-            $scope.contributors = [{
-                username: 'Osama',
-                userId: 'blabla',
-                id: 1
-            }, {
-                username: 'Sandra',
-                userId: 'hejhej111',
-                id: 2
-            }, {
-                username: 'Rami',
-                userId: 'hejhej222',
-                id: 3
-            }, {
-                username: 'Stefan',
-                userId: 'hejhej333',
-                id: 4
-            }];
+            $scope.contributors = userFactory.getAllUsers();
+            // $scope.contributors = [{
+            //     username: 'Osama',
+            //     userId: 'blabla',
+            //     id: 1
+            // }, {
+            //     username: 'Sandra',
+            //     userId: 'hejhej111',
+            //     id: 2
+            // }, {
+            //     username: 'Rami',
+            //     userId: 'hejhej222',
+            //     id: 3
+            // }, {
+            //     username: 'Stefan',
+            //     userId: 'hejhej333',
+            //     id: 4
+            // }];
 
             $scope.sortingLog = [];
 
