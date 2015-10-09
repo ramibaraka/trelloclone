@@ -69,7 +69,7 @@ angular.module('trellocloneApp')
                     });
             };
 
-            $scope.contributors = userFactory.getAllUsers();
+            $scope.users = userFactory.getAllUsers();
             // $scope.contributors = [{
             //     username: 'Osama',
             //     userId: 'blabla',

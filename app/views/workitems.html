@@ -9,7 +9,7 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu pull-right">
-				<li ng-repeat="contributor in contributors"><a href="#/">{{contributor.username}}</a></li>
+				<li ng-repeat="user in users"><a href="#/">{{user.username}}</a></li>
 			</ul>
 		</div>
 	</div>
@@ -47,11 +47,11 @@
 
 							<div class="form-group">
 								<label for="description">Assign this workitem to user:</label>
-								<div class="input-group" ng-repeat="contributor in contributors">
+								<div class="input-group" ng-repeat="user in users">
 									<span class="input-group-addon">
-										<input type="radio" name="options" id="{{contributor.userId}}" ng-click="setUserToWorkItem(contributor.userId, 1)">
+										<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToWorkItem(user.userId, 1)">
 									</span>
-									<label class="form-control" aria-label="..."> {{contributor.username}} </label>
+									<label class="form-control" aria-label="..."> {{user.username}} </label>
 								</div>
 							</div>
 
@@ -122,12 +122,12 @@
 										</div>
 
 										<div class="form-group">
-											<label for="description">Contributor</label>
-											<div class="input-group" ng-repeat="contributor in contributors">
+											<label for="description">User</label>
+											<div class="input-group" ng-repeat="user in users">
 												<span class="input-group-addon">
-													<input type="radio" name="options" id="{{contributor.userId}}" ng-click="setUserToWorkItem(contributor.userId, workitem.id)">
+													<input type="radio" name="options" id="{{user.userId}}" ng-click="setUserToWorkItem(user.userId, workitem.id)">
 												</span>
-												<label class="form-control" aria-label="..." value="{{contributor.username}}">
+												<label class="form-control" aria-label="..." value="{{user.username}}">
 											</div>
 										</div>
 
@@ -203,8 +203,8 @@
 											<textarea class="form-control" id="description">{{workitem.description}}</textarea>
 										</div>
 										<div class="form-group">
-											<label for="description">Contributor</label>
-											<div class="well well-sm" ng-repeat="contributor in contributors">{{contributor.username}}</div>
+											<label for="description">User</label>
+											<div class="well well-sm" ng-repeat="user in users">{{user.username}}</div>
 										</div>
 										<!-- Har ett issue -->
 										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
@@ -277,8 +277,8 @@
 											<textarea class="form-control" id="description">{{workitem.description}}</textarea>
 										</div>
 										<div class="form-group">
-											<label for="description">Contributor</label>
-											<div class="well well-sm" ng-repeat="contributor in contributors">{{contributor.username}}</div>
+											<label for="description">User</label>
+											<div class="well well-sm" ng-repeat="user in users">{{user.username}}</div>
 										</div>
 										<!-- Har ett issue -->
 										<div class="form-group" ng-show="{{workitem.hasOwnProperty('issue')}}">
