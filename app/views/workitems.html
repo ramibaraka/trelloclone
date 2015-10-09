@@ -18,7 +18,6 @@
 		<input type="submit" class="btn btn-primary" value="refresh" ng-click="refresh()">
 	</span>
 
-
 	<div class="w-form">
 		<form ng-submit="addWorkItem()" class="form">
 			<div class="input-group">
@@ -48,7 +47,6 @@
 						</span>
 					</div>
 					<li class="list-group-item" data-toggle="collapse" data-target="#collapseExample{{workitem.id}}" aria-expanded="false" aria-controls="collapseExample{{workitem.id}}">
-
 
 						<i class="fa pull-right fa-chevron-down"></i>
 
@@ -95,7 +93,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<!--  ------------------------------------------ IN PROGRESS ------------------------------------------------- -->
 
@@ -160,7 +157,6 @@
 			</div>
 		</div>
 
-		
 		<!--  ------------------------------------------ COMPLETED ------------------------------------------------- -->
 
 		<div class="w-section col-md-4">
@@ -224,22 +220,4 @@
 				</div>
 			</div>
 		</div>
-
-		
 	</div>
-
-
-
-	<!-- <div class="w-section col-md-4">
-			<h3 class="text-center">IN PROGRESS <i id="progress" class="fa fa-spinner"></i></h3>
-			<div ui-sortable="sortableOptionsList[1]" class="apps-container screen" ng-model="workItems[1]">
-				<div class="bg-info app" ng-repeat="app in workItems[1]">{{app.title}}</div>
-			</div>
-		</div>
-
-		<div class="w-section col-md-4">
-			<h3 class="text-center">COMPLETED <i class="fa fa-check"></i></h3>
-			<div ui-sortable="sortableOptionsList[2]" class="apps-container screen" ng-model="workItems[2]">
-				<div class="bg-success app" ng-repeat="app in workItems[2]">{{app.title}}</div>
-			</div>
-		</div> -->
