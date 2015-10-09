@@ -41,15 +41,13 @@ angular.module('trellocloneApp')
             return $http.post(urlBase, workItem);
         };
 
+        workItemFactory.updateWorkItem = function (workItem) {
+            return $http.put(urlBase + '/' + workItem.id, workItem);
+        };
+
         workItemFactory.setCompleted = function (id) {
             return $http.put(urlBase + '/' + id + '/status', {
                 status: 'COMPLETED'
-            });
-        };
-
-        workItemFactory.setUserToWorkItem = function (userId, workItemId) {
-            return $http.put('http://localhost:8080/taskboard-web/users' + '/' + userId + '/workitems', {
-                id: workItemId
             });
         };
 

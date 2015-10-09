@@ -1,7 +1,8 @@
 'use strict';
 angular.module('trellocloneApp')
-    .controller('WorkItemCtrl', ['$scope', 'workItemFactory',
-        function ($scope, workItemFactory) {
+    .controller('WorkItemCtrl', ['$scope', 'workItemFactory', 'userFactory',
+
+        function ($scope, workItemFactory, userFactory) {
 
             $scope.status;
             $scope.issues;
@@ -78,15 +79,15 @@ angular.module('trellocloneApp')
             }, {
                 username: 'Sandra',
                 userId: 'hejhej111',
-                id: 2
+                id: 3
             }, {
                 username: 'Rami',
                 userId: 'hejhej222',
-                id: 3
+                id: 4
             }, {
                 username: 'Stefan',
                 userId: 'hejhej333',
-                id: 4
+                id: 11
             }];
 
             $scope.workItems = [
@@ -238,15 +239,15 @@ angular.module('trellocloneApp')
             };
 
             $scope.saveWorkItem = function () {
+                //Stänger ner modalen
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+
                 var workitem = angular.copy($scope.formData);
-                workItemFactory.saveWorkItem(workitem);
-                // console.log('SUBMITTED');
-                // console.log('formData:' + result);
-                // for (var k in result) {
-                //     if (result.hasOwnProperty(k)) {
-                //         console.log('Key is ' + k + ', value is ' + result[k]);
-                //     }
-                // }
+                //Skickar datan till servern
+                workItemFactory.updateWorkItem(workitem);
+                //laddar om datan från servern
+                refresh();
             };
 
             $scope.initFormData = function (workItem) {
@@ -255,7 +256,7 @@ angular.module('trellocloneApp')
 
             $scope.setUserToWorkItem = function (userId, workItemId) {
                 // console.log('userId: ' + userId + ' workItemId: ' + workItemId);
-                workItemFactory.setUserToWorkItem(userId, workItemId);
+                userFactory.addWorkItemToUser(userId, workItemId);
             };
         }
     ]);
