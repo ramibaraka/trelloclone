@@ -16,7 +16,6 @@ angular.module('trellocloneApp')
             ];
             $scope.formData = {};
 
-            refresh();
 
             function refresh() {
                 setTimeout(function () {
@@ -26,6 +25,7 @@ angular.module('trellocloneApp')
                     getAllUsers();
                 }, 500);
             }
+            refresh();
 
             function getAllUsers() {
                 userFactory.getAllUsers()
@@ -83,7 +83,7 @@ angular.module('trellocloneApp')
                             id: '3',
                             title: 'title3',
                             description: 'description3'
-                        }]
+                        }];
                         $scope.status = 'Unable to load workitem data: ' + error.message;
                     });
             }
@@ -131,7 +131,7 @@ angular.module('trellocloneApp')
                     },
                     remove: function () {
                         if (_listName === 'IN_PROGRESS' && $scope.workItems[1].length === 0) {
-                            $("#progress").removeClass("fa-pulse");
+                            $('#progress').removeClass('fa-pulse');
                         }
                     }
                 };
