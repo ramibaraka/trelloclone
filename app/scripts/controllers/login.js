@@ -8,6 +8,7 @@ angular.module('trellocloneApp')
 			if (username === 'hej' && password === 'bajs') {
 				//redirect to board
 				window.alert('Correct input!');
+				window.location.replace("http://localhost:9000/#/");
 			} else {
 				window.alert('Wrong input!');
 			}
