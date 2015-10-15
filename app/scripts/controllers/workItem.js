@@ -46,7 +46,7 @@ angular.module('trellocloneApp')
             function getInProgressWorkItems() {
                 workItemFactory.getWorkItemsInProgress()
                     .success(function (workItemsInProgress) {
-                        $scope.workItems[1] = workItemsInProgress.workitems;
+                        $scope.workItems[1] = workItemsInProgress;
                     })
                     .error(function (error) {
                         $scope.workItems[1] = [{
@@ -61,7 +61,7 @@ angular.module('trellocloneApp')
             function getNotStartedWorkItems() {
                 workItemFactory.getNotStartedWorkItems()
                     .success(function (notStartedWorkItems) {
-                        $scope.workItems[0] = notStartedWorkItems.workitems;
+                        $scope.workItems[0] = notStartedWorkItems;
                     })
                     .error(function (error) {
                         $scope.workItems[0] = [{
@@ -76,7 +76,7 @@ angular.module('trellocloneApp')
             function getCompletedWorkItems() {
                 workItemFactory.getCompletedWorkItems()
                     .success(function (completedWorkItems) {
-                        $scope.workItems[2] = completedWorkItems.workitems;
+                        $scope.workItems[2] = completedWorkItems;
                     })
                     .error(function (error) {
                         $scope.workItems[2] = [{
