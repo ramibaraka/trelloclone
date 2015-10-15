@@ -26,7 +26,7 @@ angular.module('trellocloneApp')
                         getNotStartedWorkItems(token);
                         getCompletedWorkItems(token);
                     } else {
-                        window.location.href = '/login';
+                        window.location.href = '#/login';
                     }
                     console.dir($scope.workItems);
                     getAllUsers();
@@ -41,12 +41,7 @@ angular.module('trellocloneApp')
                         $scope.users = usersResponse.users;
                     })
                     .error(function (error) {
-                        $scope.users =
-                            [{
-                                username: 'user',
-                                userId: 'userId',
-                                id: 1
-                            }];
+                        window.location.href = '#/login';
                         $scope.status = 'Unable to load users data: ' + error.message;
                     });
             }
@@ -57,11 +52,7 @@ angular.module('trellocloneApp')
                         $scope.workItems[1] = workItemsInProgress;
                     })
                     .error(function (error) {
-                        $scope.workItems[1] = [{
-                            id: '1',
-                            title: 'title1',
-                            description: 'description1'
-                        }];
+                        window.location.href = '#/login';
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
@@ -72,11 +63,7 @@ angular.module('trellocloneApp')
                         $scope.workItems[0] = notStartedWorkItems;
                     })
                     .error(function (error) {
-                        $scope.workItems[0] = [{
-                            id: '2',
-                            title: 'title2',
-                            description: 'description2'
-                        }];
+                        window.location.href = '#/login';
                         $scope.status = 'Unable to load workItem data: ' + error.message;
                     });
             }
