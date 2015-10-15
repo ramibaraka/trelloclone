@@ -5,12 +5,15 @@ angular.module('trellocloneApp')
 		$scope.password;
 
 		$scope.validate = function (username, password) {
+			console.dir("test");
 			loginFactory.tryLogin(username, password)
 				.success(function (token) {
-					window.alert(token);
+					console.dir("succes");
+					window.localStorage.setItem("token", token);
+					window.location.href = '/';
 				})
 				.error(function (error) {
-					window.alert(error);
+					console.dir("error");
 				});
 		};
 	}]);

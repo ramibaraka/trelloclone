@@ -11,4 +11,6 @@ angular.module('trellocloneApp')
 			loginObject.password = password;
 			return $http.post(urlBase, loginObject);
 		};
+
+		return loginFactory;
 	}]);

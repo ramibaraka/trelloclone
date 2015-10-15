@@ -14,20 +14,33 @@ angular
     'ui.sortable',
   ])
   .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/workitems.html',
-        controller: 'WorkItemCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'LoginCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+      $routeProvider
+        .when('/', {
+          templateUrl: 'views/workitems.html',
+          controller: 'WorkItemCtrl'
+        })
+        .when('/about', {
+          templateUrl: 'views/about.html',
+          controller: 'AboutCtrl'
+        })
+        .when('/login', {
+          templateUrl: 'views/login.html',
+          controller: 'LoginCtrl'
+        })
+        .otherwise({
+          redirectTo: '/'
+        });
+    }, '$httpProvider',
+    function ($routeProvider, $httpProvider) {
+      $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
+    }
+  );
+
+
+// .config([
+//  '$routeProvider',
+//  '$httpProvider',
+//  function($routeProvider, $httpProvider){
+//    $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
+//  }
+//  ]);

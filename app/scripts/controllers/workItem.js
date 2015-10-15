@@ -19,12 +19,20 @@ angular.module('trellocloneApp')
 
             function refresh() {
                 setTimeout(function () {
-                    getInProgressWorkItems();
-                    getNotStartedWorkItems();
-                    getCompletedWorkItems();
+                    var token = window.localStorage.getItem("token");
+
+                    if (typeof token !== 'undefined') {
+                        getInProgressWorkItems(token);
+                        getNotStartedWorkItems(token);
+                        getCompletedWorkItems(token);
+                    } else {
+                        window.location.href = '/login';
+                    }
+                    console.dir($scope.workItems);
                     getAllUsers();
                 }, 500);
             }
+
             refresh();
 
             function getAllUsers() {
@@ -43,8 +51,8 @@ angular.module('trellocloneApp')
                     });
             }
 
-            function getInProgressWorkItems() {
-                workItemFactory.getWorkItemsInProgress()
+            function getInProgressWorkItems(token) {
+                workItemFactory.getWorkItemsInProgress(token)
                     .success(function (workItemsInProgress) {
                         $scope.workItems[1] = workItemsInProgress;
                     })
@@ -58,8 +66,8 @@ angular.module('trellocloneApp')
                     });
             }
 
-            function getNotStartedWorkItems() {
-                workItemFactory.getNotStartedWorkItems()
+            function getNotStartedWorkItems(token) {
+                workItemFactory.getNotStartedWorkItems(token)
                     .success(function (notStartedWorkItems) {
                         $scope.workItems[0] = notStartedWorkItems;
                     })
@@ -73,8 +81,8 @@ angular.module('trellocloneApp')
                     });
             }
 
-            function getCompletedWorkItems() {
-                workItemFactory.getCompletedWorkItems()
+            function getCompletedWorkItems(token) {
+                workItemFactory.getCompletedWorkItems(token)
                     .success(function (completedWorkItems) {
                         $scope.workItems[2] = completedWorkItems;
                     })

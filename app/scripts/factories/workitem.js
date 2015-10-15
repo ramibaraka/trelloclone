@@ -21,16 +21,28 @@ angular.module('trellocloneApp')
             return $http.get(urlBase + '/status/' + status);
         };
 
-        workItemFactory.getCompletedWorkItems = function () {
-            return $http.get(urlBase + '/status/completed');
+        workItemFactory.getCompletedWorkItems = function (token) {
+            return $http.get(urlBase + '/status/completed', {
+                headers: {
+                    'token': token
+                }
+            });
         };
 
-        workItemFactory.getWorkItemsInProgress = function () {
-            return $http.get(urlBase + '/status/in_progress');
+        workItemFactory.getWorkItemsInProgress = function (token) {
+            return $http.get(urlBase + '/status/in_progress', {
+                headers: {
+                    'token': token
+                }
+            });
         };
 
-        workItemFactory.getNotStartedWorkItems = function () {
-            return $http.get(urlBase + '/status/not_started');
+        workItemFactory.getNotStartedWorkItems = function (token) {
+            return $http.get(urlBase + '/status/not_started', {
+                headers: {
+                    'token': token
+                }
+            });
         };
 
         workItemFactory.getWorkItemsHistory = function (fromDate, toDate) {

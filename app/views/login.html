@@ -1,5 +1,5 @@
 <div class="login-form" ng-controller="LoginCtrl">
-	<form>
+	<form name="login" ng-submit="validate(username, password)">
 		<div class="form-group">
 			<label>Username</label>
 			<input type="text" class="form-control" ng-model="username" placeholder="Username">	
@@ -9,6 +9,6 @@
 			<input type="password" class="form-control" ng-model="password" placeholder="Password">		
 		</div>
 		
-		<button type="submit" class="btn btn-default" ng-click="validate(username, password)">Login</button>
+		<button type="submit" class="btn btn-default">Login</button>
 	</form>
 </div>
