@@ -1,0 +1,99 @@
+Datasäkerhet
+
+Inte anropa metod från konstruktor. (för att folk inte senare ska fakta när overrida dina metoder)
+public synchronozed(?) final String toString(){ return ”hej”; }
+
+ex. hachSet - inte dubletter. om överrid hach & equals mst ha hach - annars ig :p
+//för att undvika dubletter i set. om man lägger till 2 olika users med olika usernames och sen ändrar den ena att vara samma som den andra så blir det dubletter i set. för att undvika returnera objekt ist för sträng.
+
+//immutable metod
+User setUsername (String userName){
+	return new User(userName);
+}
+
+
+object med Date är mutable även om du inte har en setDate() för Date har en .setTime().
+returnera kopia av obj för att undvika detta. new Date(regDte.getTime());
+
+akta mutable object
+
+
+//kommer åt private variabler
+field.setAccessable(true); //gör att du kan hämta en private final variabel i clazz
+field[] f = class.getDeclaredFields(); //hämtar alla datamedlemar fr den klassen
+field.get(unsafe); //hämtar datamedlemmen
+//åtgärd
+MySecurityManager extends SecurityManager{
+	@Override
+	checkPermission(final Permission p){
+		if(p.getName().equals(”surpressAccessChecks”){
+			throw new SecurityException(”Nice try!”);
+		super.checkPermission(p);
+	}
+}
+
+static
+if( !sys.getSecurityManager() instanceof MySecurityManager){
+	throw new SecurityExeption(”invalid secutityManager”);
+
+
+
+//få en singleton att inte bli en sådan längre. dvs klona den/skapa dubletter(?)
+//åtgärd
+public transient static final Object INSTANCE;
+
+private Object readResolve(){
+	return INSTANCE;
+}
+
+är dina obj som har singeltons och är serializable är du ansvarig för read/write
+
+
+
+//out of memory meatspace - kolla referenser som gör att minnet inte kan frigöras
+//garbagecollector kastar saker som inte längre hålls av/med referens eg. user1 = new User();
+
+referenser utanför classladdare in till class => minne kan inte frigöras
+
+logLevel
+Logger.getLogger(class.log(leakingLevel, ”doGet called”)); 
+java.util.Level
+(man kan skriva ut logs via terminal)
+
+
+DDoS - distributedDenialOf - belasta servrar
+svårt att motverka
+begränsa request per antal sec per ip-adress (mer mot dålig kod)
+
+Cross-site Request Forgery - copierar coockie för att få access
+använd tokens
+
+Network Sniffing - kolla trafik på nätverk
+kryptera requests (https, inte http)
+
+SQL-injection - put sql in text input
+use prepared statements
+ex.  u: tom p: password’; OR 1=1;
+www.wasp
+
+Cross site scripting
+
+Vunerable XSS
+global variables, localstorage, DOM - lägg inte på hemsidan (keylogger?)
+
+Man in the middle attack - get ppl to connect to your network, act like proxy but log all communication.
+signed(certifikat) encryption m https
+går att kopiera certifikat för att komma runt detta
+CSR - certificate signing request
+
+Spoofing - scam via phone, not script/code
+ha lagom password-policy
+
+Traditional hacking - hacka databasen, få access till servrarna för db
+pacha servrar ofta
+authenticator policy (limited access to users)
+
+salted pw hacking - read
+hacha pw (samma pw får dock alltid samma hach) (lösning: ha unik salt för varje användare dvs ”pw”+”unikSalt” => hacha)
+
+node gpm
