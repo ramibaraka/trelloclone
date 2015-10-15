@@ -28,7 +28,6 @@ angular.module('trellocloneApp')
                     } else {
                         window.location.href = '#/login';
                     }
-                    console.dir($scope.workItems);
                     getAllUsers();
                 }, 500);
             }
